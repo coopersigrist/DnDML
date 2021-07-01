@@ -7,7 +7,7 @@ STATIC_DIR = os.path.abspath('../static')
 
 # app = Flask(__name__) # to make the app run without any
 app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
-
+#this is a comment
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 #session is a dict unique to you.
@@ -20,6 +20,8 @@ def home():
     elif request.method == "POST":
         answerNum = math.sqrt(int(request.form.get("name")))
         return render_template("index.html", answer = f"{answerNum:0.2f}")
+
+@app.route("/")
 
 if __name__ == "__main__":
     app.run(debug=True)
