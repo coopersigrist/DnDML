@@ -1,0 +1,18 @@
+
+.output{
+    font-size: 20px;
+    color: slateblue;
+}
+button{
+    background-color: white;
+}
+
+button:hover{
+    background-color: grey;
+}
+
+@media (min-width:800px){
+    body{
+        background-color: red;
+    }
+}
