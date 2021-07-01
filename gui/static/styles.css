@@ -10,9 +10,8 @@ button{
 button:hover{
     background-color: grey;
 }
-
-@media (min-width:800px){
-    body{
-        background-color: red;
-    }
+ 
+p{
+    color: white;
+    background-color: black;
 }
