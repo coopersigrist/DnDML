@@ -1,17 +1,39 @@
 
-.output{
-    font-size: 20px;
-    color: slateblue;
+body{
+    margin: 0;
+    background: #282A36
 }
-button{
-    background-color: white;
+svg{
+    background: #6272A4;
+    position: absolute;
+    width: 75.9%;
+    height: 50.3%;
+    left: 21.9%;
+    top: 11.3%;
+    border: 6px solid rgba(248, 248, 242, 0.13);
+}
+.draggable-group{
+    cursor: move;
 }
 
-button:hover{
-    background-color: grey;
+.slot{
+    cursor:crosshair;
 }
- 
-p{
+
+rect{
+    stroke-width: 2px;
+    stroke: black;
+}
+
+label{
     color: white;
-    background-color: black;
+}
+
+#parameters{
+    position: absolute;
+    width: 40.4%;
+    height: 33.5%;
+    left: 1.7%;
+    top: 64%;
+    background: #6272A4;
 }

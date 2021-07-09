@@ -1,48 +1,28 @@
-<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <meta name="description" content="This is an HTML test">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Chinguun's Test</title>
+        <title>DnDML</title>
 
         <link rel = "stylesheet" href = "../static/styles.css">
-        <script type = "text/javascript" src = "../static/javascript.js"></script>
-
-        <style>
-            body{
-                background-color: {{ backgroundColor}};
-            }
-        </style>
     </head>
-    <body id = "body" >
-        <main>
-            <form action="{{ url_for('home')}}" method="post">
-                <input type="radio" id="color1" name="colorOptions" value="red">
-                <label for="color1">
-                    Red
-                </label><br>
-                <input type="radio" id="color2" name="colorOptions" value="green">
-                <label for="color2">
-                    Green
-                </label><br>
-                <input type="radio" id="color3" name="colorOptions" value="steelblue">
-                <label for="color3">
-                    Steel Blue
-                </label><br>
-                <button>
-                    Change
-                </button>
+    <body></body>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"
+            id="canvas">
+            <!-- Dynamic -->
+        </svg>
+        <div id="parameters">
+            <form>
+                <label for="elemAttribSelector1">Kernel size: </label>
+                <input type="text" id="elemAttribSelector1" placeholder="kernel size" onchange="changeParameter(event)">
+                <br>
+                <label for="elemAttribSelector2">Stride: </label>
+                <input type="text" id="elemAttribSelector2" placeholder="stride" onchange="changeParameter(event)">
+                <br>
+                <label for="elemAttribSelector3">Channels: </label>
+                <input type="text" id="elemAttribSelector3" placeholder="channels" onchange="changeParameter(event)">
             </form>
-            <br>
-            <form action="{{ url_for('calcSqrt') }}" method="post">
-                <input type = "number" name =  "name" placeholder = "Enter number" title = "A text box">
-                <button> 
-                    Calculate the square root 
-                </button>
-            </form>
-
-            <p class = "output">{{ answer }}</p>
-        </main>
+        </div>
+        <script type="text/javascript" src="../static/javascript.js"></script>
+        <script type="text/javascript" src="../static/spawn.js"></script>
     </body>
 </html>
