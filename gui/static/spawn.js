@@ -1,9 +1,7 @@
 
-var NS = "http://www.w3.org/2000/svg", elemWidth = 80, elemHeight = 40, slotWidth = 10, slotHeight = 10;
-var elements = [];
-
 class Element{
     static highestID = 0;
+
     constructor(x, y){
         this.id = Element.highestID++;
         this.x = x;
@@ -14,6 +12,7 @@ class Element{
 
         this.group = document.createElementNS(NS, 'g');
         this.group.classList.add('draggable-group');
+        this.group.id = (Element.highestID - 1).toString() + " element";
 
         this.main = document.createElementNS("http://www.w3.org/2000/svg", 'rect');
         this.main.setAttribute('x', x.toString());
@@ -41,12 +40,15 @@ class Element{
         this.group.appendChild(this.main);
         this.group.appendChild(this.slotInput);
         this.group.appendChild(this.slotOutput);
+
+        //Keeping track of whether the slot can be used to draw an edge or not
+        this.slotInputAvailable = true;
+        this.slotOutputAvailable = true;
     }
     draw(svg){
         svg.appendChild(this.group);
     }
     toJSON(){
-        Element.highestID++;
         return{
             id: this.id,
             type: "element",
@@ -69,10 +71,10 @@ class Element{
 }
 
 function spawnElem(event){
-    let svg = document.getElementById("canvas");
-    if(event.which == 3){
-        let pos = getMousePosition(svg, event)
-        spawnElemHelper(svg, pos.x, pos.y);
+    let svgWindow = document.getElementById("canvas");
+    if(event.which == 2){
+        let pos = getMousePosition(svgWindow, event);
+        spawnElemHelper(svgWindow, pos.x, pos.y);
     }
 }
 
@@ -84,6 +86,8 @@ function spawnElemHelper(svg, x, y){
     elements.push(newElement);
     selectedElementID = newElement.id;
     updateBackend();
+    undirectedGraph[newElement.id] = [];
+    directedGraph[newElement.id] = [];
 
     newElement.draw(svg);
 }
@@ -114,5 +118,25 @@ function updateBackend(){
 
 document.getElementById('canvas').addEventListener('mousedown', spawnElem);
 
+class Edge{
+    constructor(groupID1, groupID2, x1, y1, x2, y2){
+        directedGraph[groupID1].push(groupID2);
+        undirectedGraph[groupID1].push(groupID2);
+        undirectedGraph[groupID2].push(groupID1);
+        this.theLine = document.createElementNS("http://www.w3.org/2000/svg", 'line');
+        this.theLine.classList.add("edge");
+        this.theLine.id = groupID1.toString() + "-" + groupID2.toString();
+        this.theLine.setAttribute("x1", x1);
+        this.theLine.setAttribute("x2", x2);
+        this.theLine.setAttribute("y1", y1);
+        this.theLine.setAttribute("y2", y2);
+        svgWindow.appendChild(this.theLine);
+    }
 
-
+    setPosition(x1, y1, x2, y2){
+        this.theLine.setAttribute("x1", x1);
+        this.theLine.setAttribute("x2", x2);
+        this.theLine.setAttribute("y1", y1);
+        this.theLine.setAttribute("y2", y2);
+    }
+}

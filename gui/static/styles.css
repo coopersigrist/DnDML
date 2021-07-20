@@ -37,3 +37,8 @@ label{
     top: 64%;
     background: #6272A4;
 }
+
+.edge{
+    stroke-width: 2px;
+    stroke: red;
+}
