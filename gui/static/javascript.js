@@ -59,17 +59,21 @@ function bindSlot(newSelectedSlot){
     //Is the newSelectedslot input type and is it available?
     if(newSelectedSlot == parent1.slotInput && parent1.slotInputAvailable){
         if(selectedSlot.parentObj == null || selectedSlot.type == "input"){
-            console.log("AAAA");
+
             //First selection or choosing an input slot again
             selectedSlot.parentObj = elements[parseInt(newSelectedSlot.parentNode.id)];
             selectedSlot.elem = newSelectedSlot;
             selectedSlot.type = "input";
         }
         else{
-            console.log("BBBB");
+            let translationTransform1 = getTranslationTransform(newSelectedSlot.parentNode);
+            let translationTransform2 = getTranslationTransform(selectedSlot.elem.parentNode);
+
             //selectedSlot is the output slot, and newSelectedSlot is the input slot
-            let x1 = newSelectedSlot.x.baseVal.value + slotWidth / 2, y1 = newSelectedSlot.y.baseVal.value + slotHeight / 2;
-            let x2 = selectedSlot.elem.x.baseVal.value + slotWidth / 2, y2 = selectedSlot.elem.y.baseVal.value + slotHeight / 2;
+            let x1 = newSelectedSlot.x.baseVal.value + slotWidth / 2 + translationTransform1.matrix.e;
+            let y1 = newSelectedSlot.y.baseVal.value + slotHeight / 2 + translationTransform1.matrix.f;
+            let x2 = selectedSlot.elem.x.baseVal.value + slotWidth / 2 + translationTransform2.matrix.e;
+            let y2 = selectedSlot.elem.y.baseVal.value + slotHeight / 2 + translationTransform2.matrix.f;
             edges.push(new Edge(parseInt(newSelectedSlot.parentNode.id), parseInt(selectedSlot.parentObj.id), x1, y1, x2, y2));
             parent1.slotInputAvailable = false;
             selectedSlot.parentObj.slotOutputAvailable = false;
@@ -81,17 +85,21 @@ function bindSlot(newSelectedSlot){
     //or is the newSelectedSlot's type output and is it available?
     else if(newSelectedSlot == parent1.slotOutput && parent1.slotOutputAvailable){
         if(selectedSlot.parentObj == null || selectedSlot.type == "output"){
-            console.log("CCCC");
+
             //First selection or choosing an output slot again
             selectedSlot.parentObj = elements[parseInt(newSelectedSlot.parentNode.id)];
             selectedSlot.elem = newSelectedSlot;
             selectedSlot.type = "output";
         }
         else{
-            console.log("DDDD");
+            let translationTransform1 = getTranslationTransform(newSelectedSlot.parentNode);
+            let translationTransform2 = getTranslationTransform(selectedSlot.elem.parentNode);
+
             //selectedSlot is the input slot, and newSelectedSlot is the output slot
-            let x1 = newSelectedSlot.x.baseVal.value + slotWidth / 2, y1 = newSelectedSlot.y.baseVal.value + slotHeight / 2;
-            let x2 = selectedSlot.elem.x.baseVal.value + slotWidth / 2, y2 = selectedSlot.elem.y.baseVal.value + slotHeight / 2;
+            let x1 = newSelectedSlot.x.baseVal.value + slotWidth / 2 + translationTransform1.matrix.e;
+            let y1 = newSelectedSlot.y.baseVal.value + slotHeight / 2 + translationTransform1.matrix.f;
+            let x2 = selectedSlot.elem.x.baseVal.value + slotWidth / 2 + translationTransform2.matrix.e;
+            let y2 = selectedSlot.elem.y.baseVal.value + slotHeight / 2 + translationTransform2.matrix.f;
             edges.push(new Edge(parseInt(selectedSlot.parentObj.id), parseInt(newSelectedSlot.parentNode.id), x2, y2, x1, y1));
             parent1.slotOutputAvailable = false;
             selectedSlot.parentObj.slotInputAvailable = false;
@@ -99,8 +107,20 @@ function bindSlot(newSelectedSlot){
     }
 }
 
+function getTranslationTransform(theElement){
+    let transforms = theElement.transform.baseVal;
+
+    if (transforms.length === 0 || transforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE) {
+        // Create an transform that translates by (0, 0)
+        let translate = svgWindow.createSVGTransform();
+        translate.setTranslate(0, 0);
+        theElement.transform.baseVal.insertItemBefore(translate, 0);
+    }
+
+    return transforms.getItem(0);
+}
+
 function makeDraggable(event){
-    let svgWindow = event.target;
 
     let offset, transform;
 
@@ -109,7 +129,7 @@ function makeDraggable(event){
             bindSlot(event.target);
             return;
         }
-        else if(event.target.parentNode.classList.contains('draggable-group')){
+        else if(event.target.parentNode != null && event.target.parentNode.classList.contains('draggable-group')){
             bindSelectedElement(event.target.parentNode);
             bindDraggedElement(event.target.parentNode);
         }
@@ -123,18 +143,8 @@ function makeDraggable(event){
 
         offset = getMousePosition(svgWindow, event);
 
-        // Make sure the first transform on the element is a translate transform
-        let transforms = draggedElement.group.transform.baseVal;
-
-        if (transforms.length === 0 || transforms.getItem(0).type !== SVGTransform.SVG_TRANSFORM_TRANSLATE) {
-            // Create an transform that translates by (0, 0)
-            let translate = svgWindow.createSVGTransform();
-            translate.setTranslate(0, 0);
-            draggedElement.group.transform.baseVal.insertItemBefore(translate, 0);
-        }
-
         // Get initial translation
-        transform = transforms.getItem(0);
+        transform = getTranslationTransform(draggedElement.group);
         offset.x -= transform.matrix.e;
         offset.y -= transform.matrix.f;
     }
@@ -144,6 +154,50 @@ function makeDraggable(event){
             event.preventDefault();
             let coordinates = getMousePosition(svgWindow, event);
             transform.setTranslate(coordinates.x - offset.x, coordinates.y - offset.y);
+
+            //A variable to keep track of whether the edge is connected to the inputSlot or outputSlot
+            //if true - inputSlot, if false - outputSlot
+            let direction = false;
+
+            let undirectedVertexList = undirectedGraph[draggedElement.id];
+            let directedVertexList = directedGraph[draggedElement.id];
+
+            for(let i = 0; i < undirectedVertexList.length; i++){
+                let direction = false;
+                for(j = 0; j < directedVertexList.length; j++){
+                    if(undirectedVertexList[i] == directedVertexList[j]){
+                        direction = true;
+                        break;
+                    }
+                }
+
+                let edgeID;
+                if(direction){
+                    edgeID = draggedElement.id + "-" + undirectedVertexList[i];
+                }
+                else{
+                    edgeID = undirectedVertexList[i] + "-" + draggedElement.id;
+                }
+
+                for(j = 0; j < edges.length; j++){
+                    if(edges[j].id === edgeID){
+                        //if direction is true, the edge is connected to draggedElement's inputSlot, which means
+                        //we should change the x1 y1 values of the edge.
+                        let tt = getTranslationTransform(draggedElement.group);
+                        if(direction){
+                            let x1 = draggedElement.slotInput.x.baseVal.value + slotWidth / 2 + tt.matrix.e;
+                            let y1 = draggedElement.slotInput.y.baseVal.value + slotHeight / 2 + tt.matrix.f;
+                            edges[j].setPosition(x1, y1, edges[j].x2, edges[j].y2);
+                        }
+                        //otherwise we change the x2 y2 values of the edge
+                        else{
+                            let x2 = draggedElement.slotOutput.x.baseVal.value + slotWidth / 2 + tt.matrix.e;
+                            let y2 = draggedElement.slotOutput.y.baseVal.value + slotHeight / 2 + tt.matrix.f;
+                            edges[j].setPosition(edges[j].x1, edges[j].y1, x2, y2);
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -157,7 +211,7 @@ function makeDraggable(event){
     svgWindow.addEventListener('touchstart', startDrag);
     svgWindow.addEventListener('touchmove', drag);
     svgWindow.addEventListener('touchend', endDrag);
-    svgWindow.addEventListener('touchleave', endDrag);
+    //svgWindow.addEventListener('touchleave', endDrag);
     svgWindow.addEventListener('touchcancel', endDrag);
 }
 
@@ -177,6 +231,24 @@ function changeParameter(event){
     }
 }
 
+function removeEdge(event){
+    if(event.target.classList.contains('edge')){
+        let ID = event.target.id, i;
+        for(i = 0; i < edges.length; i++){
+            if(edges[i].id === ID){
+                edges[i].theLine.remove();
+                edges.splice(i, 1);
+                break;
+            }
+        }
+
+        //if all are in order, elementIDs should have 2 numbers as strings
+        let elementIDs = ID.split("-");
+        elements[parseInt(elementIDs[0])].slotInputAvailable = true;
+        elements[parseInt(elementIDs[1])].slotOutputAvailable = true;
+    }
+}
+svgWindow.addEventListener('mousedown', removeEdge);
 svgWindow.addEventListener('load', makeDraggable);
 
 

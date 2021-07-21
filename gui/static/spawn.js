@@ -123,6 +123,14 @@ class Edge{
         directedGraph[groupID1].push(groupID2);
         undirectedGraph[groupID1].push(groupID2);
         undirectedGraph[groupID2].push(groupID1);
+
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+
+        this.id = groupID1.toString() + "-" + groupID2.toString();
+
         this.theLine = document.createElementNS("http://www.w3.org/2000/svg", 'line');
         this.theLine.classList.add("edge");
         this.theLine.id = groupID1.toString() + "-" + groupID2.toString();
@@ -130,10 +138,16 @@ class Edge{
         this.theLine.setAttribute("x2", x2);
         this.theLine.setAttribute("y1", y1);
         this.theLine.setAttribute("y2", y2);
+
         svgWindow.appendChild(this.theLine);
     }
 
     setPosition(x1, y1, x2, y2){
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+
         this.theLine.setAttribute("x1", x1);
         this.theLine.setAttribute("x2", x2);
         this.theLine.setAttribute("y1", y1);
