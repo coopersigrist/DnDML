@@ -74,7 +74,7 @@ function bindSlot(newSelectedSlot){
             let y1 = newSelectedSlot.y.baseVal.value + slotHeight / 2 + translationTransform1.matrix.f;
             let x2 = selectedSlot.elem.x.baseVal.value + slotWidth / 2 + translationTransform2.matrix.e;
             let y2 = selectedSlot.elem.y.baseVal.value + slotHeight / 2 + translationTransform2.matrix.f;
-            edges.push(new Edge(parseInt(newSelectedSlot.parentNode.id), parseInt(selectedSlot.parentObj.id), x1, y1, x2, y2));
+            edges.push(new Edge(parseInt(selectedSlot.parentObj.id), parseInt(newSelectedSlot.parentNode.id), x2, y2, x1, y1));
             parent1.slotInputAvailable = false;
             selectedSlot.parentObj.slotOutputAvailable = false;
             //Deselect the currently selected slot
@@ -100,7 +100,7 @@ function bindSlot(newSelectedSlot){
             let y1 = newSelectedSlot.y.baseVal.value + slotHeight / 2 + translationTransform1.matrix.f;
             let x2 = selectedSlot.elem.x.baseVal.value + slotWidth / 2 + translationTransform2.matrix.e;
             let y2 = selectedSlot.elem.y.baseVal.value + slotHeight / 2 + translationTransform2.matrix.f;
-            edges.push(new Edge(parseInt(selectedSlot.parentObj.id), parseInt(newSelectedSlot.parentNode.id), x2, y2, x1, y1));
+            edges.push(new Edge(parseInt(newSelectedSlot.parentNode.id), parseInt(selectedSlot.parentObj.id), x1, y1, x2, y2));
             parent1.slotOutputAvailable = false;
             selectedSlot.parentObj.slotInputAvailable = false;
         }
@@ -181,18 +181,18 @@ function makeDraggable(event){
 
                 for(j = 0; j < edges.length; j++){
                     if(edges[j].id === edgeID){
-                        //if direction is true, the edge is connected to draggedElement's inputSlot, which means
+                        //if direction is true, the edge is connected to draggedElement's outputSlot, which means
                         //we should change the x1 y1 values of the edge.
                         let tt = getTranslationTransform(draggedElement.group);
                         if(direction){
-                            let x1 = draggedElement.slotInput.x.baseVal.value + slotWidth / 2 + tt.matrix.e;
-                            let y1 = draggedElement.slotInput.y.baseVal.value + slotHeight / 2 + tt.matrix.f;
+                            let x1 = draggedElement.slotOutput.x.baseVal.value + slotWidth / 2 + tt.matrix.e;
+                            let y1 = draggedElement.slotOutput.y.baseVal.value + slotHeight / 2 + tt.matrix.f;
                             edges[j].setPosition(x1, y1, edges[j].x2, edges[j].y2);
                         }
                         //otherwise we change the x2 y2 values of the edge
                         else{
-                            let x2 = draggedElement.slotOutput.x.baseVal.value + slotWidth / 2 + tt.matrix.e;
-                            let y2 = draggedElement.slotOutput.y.baseVal.value + slotHeight / 2 + tt.matrix.f;
+                            let x2 = draggedElement.slotInput.x.baseVal.value + slotWidth / 2 + tt.matrix.e;
+                            let y2 = draggedElement.slotInput.y.baseVal.value + slotHeight / 2 + tt.matrix.f;
                             edges[j].setPosition(edges[j].x1, edges[j].y1, x2, y2);
                         }
                     }
@@ -219,15 +219,15 @@ function changeParameter(event){
     let textInput = event.target;
     if(textInput.id == 'elemAttribSelector1' && selectedElement != null){
         selectedElement.kernelSize = textInput.value;
-        updateBackend();
+        sendElementChange(selectedElement.id);
     }
     else if(textInput.id == 'elemAttribSelector2' && selectedElement != null){
         selectedElement.stride = textInput.value;
-        updateBackend();
+        sendElementChange(selectedElement.id);
     }
     else if(textInput.id == 'elemAttribSelector3' && selectedElement != null){
         selectedElement.channels = textInput.value;
-        updateBackend();
+        sendElementChange(selectedElement.id);
     }
 }
 
@@ -244,10 +244,26 @@ function removeEdge(event){
 
         //if all are in order, elementIDs should have 2 numbers as strings
         let elementIDs = ID.split("-");
-        elements[parseInt(elementIDs[0])].slotInputAvailable = true;
-        elements[parseInt(elementIDs[1])].slotOutputAvailable = true;
+        elements[parseInt(elementIDs[1])].slotInputAvailable = true;
+        elements[parseInt(elementIDs[0])].slotOutputAvailable = true;
+
+        removeFromList(undirectedGraph[parseInt(elementIDs[0])], parseInt(elementIDs[1]));
+        removeFromList(undirectedGraph[parseInt(elementIDs[1])], parseInt(elementIDs[0]));
+        removeFromList(directedGraph[parseInt(elementIDs[0])], parseInt(elementIDs[1]));
+        //the Graph has changed: update it
+        updateGraph();
     }
 }
+
+function removeFromList(theList, toRemove){
+    let index = theList.indexOf(toRemove);
+    if(index > -1){
+        theList.splice(index, 1);
+        return true;
+    }
+    throw new Error("Graph edge removal fail: does not exist");
+}
+
 svgWindow.addEventListener('mousedown', removeEdge);
 svgWindow.addEventListener('load', makeDraggable);
 
