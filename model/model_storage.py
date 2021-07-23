@@ -8,7 +8,7 @@ def saveModel(model):
     model_dict = {}
     
     # save model name
-    model_dict['name'] = model.__class__.__name__
+    model_dict = {}
 
     # save model class
     model_dict['class'] = model
@@ -20,7 +20,7 @@ def saveModel(model):
 
 
     # save model dict to pickle file
-    with open('./saved_models/'+model_dict['name']+'.pickle', 'wb') as handle:
+    with open('./saved_models/'+model.__class__.__name__+'.pickle', 'wb') as handle:
         pickle.dump(model_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
