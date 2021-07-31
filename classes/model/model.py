@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 import networkx as nx
 import time as tm
+from utilities import ModelTorch
 
 
 class ModelWrapper():
@@ -86,53 +87,54 @@ class ModelWrapper():
 
         elif isinstance(self.modulesDict[moduleIdx], torch.nn.modules.conv.Conv2d):
             try:
-                c_in, h_in, w_in = inputDimension
+                inputChannels, inputHeight, inputWidth = inputDimension
             except ValueError:
                 return None
 
-            if c_in != self.modulesDict[moduleIdx].in_channels:
+            if inputChannels != self.modulesDict[moduleIdx].in_channels:
                 print('''\tMismatch between output channels ({}) from previous
                       module and input channels ({}) from current module
-                      '''.format(c_in, self.modulesDict[moduleIdx].in_channels))
+                      '''.format(inputChannels, self.modulesDict[moduleIdx].in_channels))
                 return None
 
-            pad = self.modulesDict[moduleIdx].padding
-            dil = self.modulesDict[moduleIdx].dilation
-            ker = self.modulesDict[moduleIdx].kernel_size
-            std = self.modulesDict[moduleIdx].stride
-            c_out = self.modulesDict[moduleIdx].out_channels
+            padding = self.modulesDict[moduleIdx].padding
+            dilation = self.modulesDict[moduleIdx].dilation
+            kernel = self.modulesDict[moduleIdx].kernel_size
+            stride = self.modulesDict[moduleIdx].stride
+            outputChannels = self.modulesDict[moduleIdx].out_channels
 
-            h_out = int((h_in + 2. * pad[0] - dil[0]
-                         * (ker[0] - 1.) - 1.) / std[0] + 1.)
-            w_out = int((h_in + 2. * pad[1] - dil[1]
-                         * (ker[1] - 1.) - 1.) / std[1] + 1.)
+            outputHeight = int((inputHeight + 2. * padding[0] - dilation[0]
+                                * (kernel[0] - 1.) - 1.) / stride[0] + 1.)
+            outputWidth = int((inputWidth + 2. * padding[1] - dilation[1]
+                               * (kernel[1] - 1.) - 1.) / stride[1] + 1.)
 
-            return (c_out, h_out, w_out)
+            return (outputChannels, outputHeight, outputWidth)
 
         elif isinstance(self.modulesDict[moduleIdx], torch.nn.modules.flatten.Flatten):
-            c_in, h_in, w_in = inputDimension
+            inputChannels, inputHeight, inputWidth = inputDimension
 
-            return (c_in * h_in * w_in,)
+            return (inputChannels * inputHeight * inputWidth,)
 
         elif isinstance(self.modulesDict[moduleIdx], torch.nn.modules.linear.Linear):
-            feat_in, = inputDimension
+            inputFeatures, = inputDimension
 
-            if feat_in != self.modulesDict[moduleIdx].in_features:
+            if inputFeatures != self.modulesDict[moduleIdx].in_features:
                 print('''\tMismatch between output features ({}) from previous
                       module and input features ({}) from current module
-                      '''.format(feat_in, self.modulesDict[moduleIdx].in_features))
+                      '''.format(inputFeatures, self.modulesDict[moduleIdx].in_features))
                 return None
 
-            feat_out = self.modulesDict[moduleIdx].out_features
+            outputFeatures = self.modulesDict[moduleIdx].out_features
 
-            return (feat_out,)
+            return (outputFeatures,)
 
     def showConnectivityGraph(self):
         nx.draw_networkx(self.connectivityGraph)
 
     def createModel(self):
         if self.isConnectivityGraphCorrect('in'):
-            pass
+            print('Model created!')
+            self.modelTorch = ModelTorch(self.modulesDict, self.connectivityGraph)
         else:
             print('Impossible to create model')
 
@@ -177,3 +179,7 @@ if __name__ == "__main__":
 
     # Check connectivity graph
     print(mw.isConnectivityGraphCorrect())
+    
+    # Create model
+    mw.createModel()
+    print(mw.modelTorch)
