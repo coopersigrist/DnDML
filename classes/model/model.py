@@ -1,14 +1,15 @@
-import numpy as np
+# import numpy as np
 import torch
 import torch.nn as nn
 import networkx as nx
-import time as tm
-from utilities import ModelTorch
+# import time as tm
+# from utilities import ModelTorch
 
 
-class ModelWrapper():
+class ModelWrapper(nn.Module):
 
     def __init__(self, inputFeatures, outputFeatures):
+        super(ModelWrapper, self).__init__()
         # Input features
         self.inputFeatures = inputFeatures
         # Output features
@@ -48,7 +49,7 @@ class ModelWrapper():
         if self.__modulesExist(idx1, idx2):
             self.connectivityGraph.add_edge(idx1, idx2)
         else:
-            print('Missing module {} in graph'.format((idx1, idx2)))
+            print('Missing module {} or {} in graph'.format(idx1, idx2))
 
     def isConnectivityGraphCorrect(self, moduleIdx='in', inputDimension=None):
         print('Checking', moduleIdx)
@@ -56,18 +57,15 @@ class ModelWrapper():
         if moduleIdx == 'in':
             inputDimension = self.inputFeatures
 
-        if moduleIdx == 'out':
-            return inputDimension == self.outputFeatures
-
-        outputDimension = self.computeOutputDimensions(
+        outputDimension = self.__computeOutputDimensions(
             moduleIdx, inputDimension)
-        moduleNeighbors = self.connectivityGraph.neighbors(moduleIdx)
 
         if outputDimension is None:
             return False
 
         print('\t', inputDimension, '==>', outputDimension)
 
+        moduleNeighbors = self.connectivityGraph.neighbors(moduleIdx)
         for neighbor in moduleNeighbors:
             print('\tNeighbor', neighbor)
             if not self.isConnectivityGraphCorrect(neighbor, outputDimension):
@@ -75,68 +73,47 @@ class ModelWrapper():
 
         return True
 
-    def computeOutputDimensions(self, moduleIdx, inputDimension):
+    def __computeOutputDimensions(self, moduleIdx, inputDimension):
+        try:
+            if moduleIdx == 'in':
+                return self.inputFeatures
+            elif moduleIdx == 'out':
+                return self.outputFeatures
+            else:
+                inputTensor = torch.randn(1, *inputDimension)
+                return tuple(self.modulesDict[moduleIdx](
+                    inputTensor).size()[1:])
+        except RuntimeError:
+            print('''\tMismatch between output features from previous
+                  module and input features from current module.''')
+            return None
+
+    def _showConnectivityGraph(self):
+        nx.draw_networkx(self.connectivityGraph, with_labels=True)
+
+    def forward(self, inputTensor):
+        return self.__computeOutput('out', inputTensor)
+    
+    def __computeOutput(self, moduleIdx='out', inputTensor=None):
+        predecessorModules = self.connectivityGraph.predecessors(moduleIdx)
+
+        for predecessor in predecessorModules:
+            # TODO: What happens with ResNet networks
+            pass
+
         if moduleIdx == 'in':
-            return self.inputFeatures
+            return inputTensor
+        if moduleIdx == 'out':
+            return self.__computeOutput(
+                moduleIdx=predecessor,
+                inputTensor=inputTensor)
 
-        elif moduleIdx == 'out':
-            return self.outputFeatures
+        return self.modulesDict[moduleIdx](
+            self.__computeOutput(
+                moduleIdx=predecessor,
+                inputTensor=inputTensor))
 
-        elif isinstance(self.modulesDict[moduleIdx], torch.nn.modules.ReLU):
-            return inputDimension
-
-        elif isinstance(self.modulesDict[moduleIdx], torch.nn.modules.conv.Conv2d):
-            try:
-                inputChannels, inputHeight, inputWidth = inputDimension
-            except ValueError:
-                return None
-
-            if inputChannels != self.modulesDict[moduleIdx].in_channels:
-                print('''\tMismatch between output channels ({}) from previous
-                      module and input channels ({}) from current module
-                      '''.format(inputChannels, self.modulesDict[moduleIdx].in_channels))
-                return None
-
-            padding = self.modulesDict[moduleIdx].padding
-            dilation = self.modulesDict[moduleIdx].dilation
-            kernel = self.modulesDict[moduleIdx].kernel_size
-            stride = self.modulesDict[moduleIdx].stride
-            outputChannels = self.modulesDict[moduleIdx].out_channels
-
-            outputHeight = int((inputHeight + 2. * padding[0] - dilation[0]
-                                * (kernel[0] - 1.) - 1.) / stride[0] + 1.)
-            outputWidth = int((inputWidth + 2. * padding[1] - dilation[1]
-                               * (kernel[1] - 1.) - 1.) / stride[1] + 1.)
-
-            return (outputChannels, outputHeight, outputWidth)
-
-        elif isinstance(self.modulesDict[moduleIdx], torch.nn.modules.flatten.Flatten):
-            inputChannels, inputHeight, inputWidth = inputDimension
-
-            return (inputChannels * inputHeight * inputWidth,)
-
-        elif isinstance(self.modulesDict[moduleIdx], torch.nn.modules.linear.Linear):
-            inputFeatures, = inputDimension
-
-            if inputFeatures != self.modulesDict[moduleIdx].in_features:
-                print('''\tMismatch between output features ({}) from previous
-                      module and input features ({}) from current module
-                      '''.format(inputFeatures, self.modulesDict[moduleIdx].in_features))
-                return None
-
-            outputFeatures = self.modulesDict[moduleIdx].out_features
-
-            return (outputFeatures,)
-
-    def showConnectivityGraph(self):
-        nx.draw_networkx(self.connectivityGraph)
-
-    def createModel(self):
-        if self.isConnectivityGraphCorrect('in'):
-            print('Model created!')
-            self.modelTorch = ModelTorch(self.modulesDict, self.connectivityGraph)
-        else:
-            print('Impossible to create model')
+    
 
 
 if __name__ == "__main__":
@@ -167,19 +144,19 @@ if __name__ == "__main__":
     mw.addConnectionBetween(4, 5)
     mw.addConnectionBetween(5, 11)
 
-    mw.addConnectionBetween('in', 6)
-    mw.addConnectionBetween(6, 7)
-    mw.addConnectionBetween(7, 8)
-    mw.addConnectionBetween(8, 9)
-    mw.addConnectionBetween(9, 10)
-    mw.addConnectionBetween(10, 11)
+    # mw.addConnectionBetween('in', 6)
+    # mw.addConnectionBetween(6, 7)
+    # mw.addConnectionBetween(7, 8)
+    # mw.addConnectionBetween(8, 9)
+    # mw.addConnectionBetween(9, 10)
+    # mw.addConnectionBetween(10, 11)
 
     mw.addConnectionBetween(11, 'out')
-    mw.showConnectivityGraph()
+
+    # Show connectivity graph
+    mw._showConnectivityGraph()
 
     # Check connectivity graph
     print(mw.isConnectivityGraphCorrect())
-    
-    # Create model
-    mw.createModel()
-    print(mw.modelTorch)
+
+    print(mw(torch.zeros(1, 3, 32, 32)))
