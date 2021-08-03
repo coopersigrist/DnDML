@@ -9,8 +9,9 @@ class pipeline():
     def __init__():
 
         self.model = None
-        self.trained_model = None
+        self.trained_model_dict = None
         self.dataset = None
+        self.dataset_dict = {}
         self.loss = None
         self.optimizer = None
         self.plotting = False
@@ -34,7 +35,7 @@ class pipeline():
 
     def set_dataset(self, dataset):
 
-        self.dataset = dataset
+        self.dataset = dataset_dict[dataset]
 
     def save_checkpoint(self, path, model, epoch):
 
