@@ -3,6 +3,9 @@ import matplotlib.pyplot as plt
 import torch
 import os
 
+from .Data import create_wrapper
+from .Model import saveModel, loadModel
+
 
 class pipeline():
 
@@ -21,6 +24,15 @@ class pipeline():
         self.save_name = ""
         self.save_path = ""
 
+        self.torchvision_list = ["CelebA", "CIFAR10","CIFAR100","Cityscapes","CocoCaptions","CocoDetection",
+                                "DatasetFolder","EMNIST","FakeData","FashionMNIST","Flickr30k","Flickr8k", "ImageFolder", "ImageNet",
+                                "Kinetics-400","KMNIST", "LSUN", "LSUNClass", "MNIST", "Omniglot", "PhotoTour", "Places365",
+                                "QMNIST", "SBD", "SBU", "SEMEION", "STL10",
+                                "SVHN", "UCF101","USPS","VOCDetection", "VOCSegmentation"]
+
+        for ds in self.torchvision_list:
+            self.add_dataset(ds)
+
     def set_optimizer(self, optimizer):
 
         self.optimizer = optimizer
@@ -33,13 +45,17 @@ class pipeline():
 
         self.loss = loss
 
-    def set_dataset(self, dataset):
+    def add_dataset(self, dataset_name):
 
-        self.dataset = dataset_dict[dataset]
+        self.dataset_dict[dataset_name] = create_wrapper(dataset_name)
 
-    def save_checkpoint(self, path, model, epoch):
+    def set_dataset(self, dataset_name):
 
-        torch.save(model.state_dict(), path +"_"+str(epoch))
+        self.dataset = self.dataset_dict[dataset]
+
+    def save_model(self, model, name):
+
+        saveModel(model, name)
 
     def train_model(self):
 
