@@ -57,7 +57,7 @@ class ModelWrapper(nn.Module):
         if moduleIdx == 'in':
             inputDimension = self.inputFeatures
 
-        outputDimension = self.__computeOutputDimensions(
+        outputDimension = self.__computeOutputDimension(
             moduleIdx, inputDimension)
 
         if outputDimension is None:
@@ -65,24 +65,24 @@ class ModelWrapper(nn.Module):
 
         print('\t', inputDimension, '==>', outputDimension)
 
-        moduleNeighbors = self.connectivityGraph.neighbors(moduleIdx)
-        for neighbor in moduleNeighbors:
-            print('\tNeighbor', neighbor)
-            if not self.isConnectivityGraphCorrect(neighbor, outputDimension):
+        moduleSuccessors = self.connectivityGraph.successors(moduleIdx)
+        for successor in moduleSuccessors:
+            print('\tSuccessor', successor)
+            if not self.isConnectivityGraphCorrect(successor, outputDimension):
                 return False
 
         return True
 
-    def __computeOutputDimensions(self, moduleIdx, inputDimension):
+    def __computeOutputDimension(self, moduleIdx, inputDimension):
         try:
             if moduleIdx == 'in':
                 return self.inputFeatures
             elif moduleIdx == 'out':
                 return self.outputFeatures
             else:
-                inputTensor = torch.randn(1, *inputDimension)
+                inputTensor = torch.randn(*inputDimension).unsqueeze(0)
                 return tuple(self.modulesDict[moduleIdx](
-                    inputTensor).size()[1:])
+                    inputTensor).squeeze(0).size())
         except RuntimeError:
             print('''\tMismatch between output features from previous
                   module and input features from current module.''')
@@ -93,7 +93,7 @@ class ModelWrapper(nn.Module):
 
     def forward(self, inputTensor):
         return self.__computeOutput('out', inputTensor)
-    
+
     def __computeOutput(self, moduleIdx='out', inputTensor=None):
         predecessorModules = self.connectivityGraph.predecessors(moduleIdx)
 
@@ -113,12 +113,10 @@ class ModelWrapper(nn.Module):
                 moduleIdx=predecessor,
                 inputTensor=inputTensor))
 
-    
-
 
 if __name__ == "__main__":
     # Create model
-    mw = ModelWrapper((3, 32, 32), (10,))
+    mw = ModelWrapper(inputFeatures=(3, 32, 32), outputFeatures=(10,))
 
     # Insert different layers
     mw.insertModule(nn.Conv2d, 3, 20, kernel_size=3, padding=1)
