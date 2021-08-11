@@ -71,7 +71,7 @@ class Element{
 function spawnElem(event){
     let svgWindow = document.getElementById("canvas");
     if(event.which == 2){
-        let pos = getMousePosition(svgWindow, event);
+        let pos = get_mouse_pos(svgWindow, event);
         spawnElemHelper(svgWindow, pos.x, pos.y);
     }
 }
@@ -83,80 +83,11 @@ function spawnElemHelper(svg, x, y){
     let newElement = new Element(topLeft.x, topLeft.y);
     elements.push(newElement);
 
-    sendElementCreation(newElement.id);
+    send_elem_creation(newElement.id);
     undirectedGraph[newElement.id] = [];
     directedGraph[newElement.id] = [];
 
     newElement.draw(svg);
-}
-
-function sendElementCreation(ID){
-    fetch('/', {
-
-        // Declare what type of data we're sending
-        headers: {
-          'Content-Type': 'application/json',
-          'Action-Type': 'elementCreate'
-        },
-
-        // Specify the method
-        method: 'POST',
-
-        // A JSON payload
-        body: JSON.stringify({id: ID})
-    }).then(function (response) { // At this point, Flask has printed our JSON
-        return response.text();
-    }).then(function (text) {
-
-        console.log('POST response: ' + text);
-
-    });
-}
-
-function sendElementChange(ID){
-    fetch('/', {
-
-        // Declare what type of data we're sending
-        headers: {
-          'Content-Type': 'application/json',
-          'Action-Type': 'elementChange'
-        },
-
-        // Specify the method
-        method: 'POST',
-
-        // A JSON payload
-        body: JSON.stringify(elements[ID])
-    }).then(function (response) { // At this point, Flask has printed our JSON
-        return response.text();
-    }).then(function (text) {
-
-        console.log('POST response: ' + text);
-
-    });
-}
-
-function updateGraph(){
-    fetch('/', {
-
-        // Declare what type of data we're sending
-        headers: {
-          'Content-Type': 'application/json',
-          'Action-Type': 'graph'
-        },
-
-        // Specify the method
-        method: 'POST',
-
-        // A JSON payload
-        body: JSON.stringify(directedGraph)
-    }).then(function (response) { // At this point, Flask has printed our JSON
-        return response.text();
-    }).then(function (text) {
-
-        console.log('POST response: ' + text);
-
-    });
 }
 
 document.getElementById('canvas').addEventListener('mousedown', spawnElem);
@@ -168,7 +99,7 @@ class Edge{
         undirectedGraph[groupID1].push(groupID2);
         undirectedGraph[groupID2].push(groupID1);
         //the Graph has changed: update it
-        updateGraph();
+        update_graph();
 
         this.x1 = x1;
         this.y1 = y1;

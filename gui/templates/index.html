@@ -13,16 +13,20 @@
         <div id="parameters">
             <form>
                 <label for="elemAttribSelector1">Kernel size: </label>
-                <input type="text" id="elemAttribSelector1" placeholder="kernel size" onchange="changeParameter(event)">
+                <input type="text" id="elemAttribSelector1" placeholder="kernel size" onchange="parameter_changed(event)">
                 <br>
                 <label for="elemAttribSelector2">Stride: </label>
-                <input type="text" id="elemAttribSelector2" placeholder="stride" onchange="changeParameter(event)">
+                <input type="text" id="elemAttribSelector2" placeholder="stride" onchange="parameter_changed(event)">
                 <br>
                 <label for="elemAttribSelector3">Channels: </label>
-                <input type="text" id="elemAttribSelector3" placeholder="channels" onchange="changeParameter(event)">
+                <input type="text" id="elemAttribSelector3" placeholder="channels" onchange="parameter_changed(event)">
             </form>
         </div>
-        <script type="text/javascript" src="../static/javascript.js"></script>
+        <script type="text/javascript" src="../static/utility.js"></script>
+        <script type="text/javascript" src="../static/main.js"></script>
         <script type="text/javascript" src="../static/spawn.js"></script>
+        <script type="text/javascript" src="../static/elementListeners.js"></script>
+        <script type="text/javascript" src="../static/edgeListeners.js"></script>
+        <script type="text/javascript" src="../static/toBackend.js"></script>
     </body>
 </html>
