@@ -2,13 +2,15 @@
 import torch
 import pickle
 
+
+
 def saveModel(model, name="Default"):
 
     # create a dictionary to save all model information
     model_dict = {}
     
     # save model name
-    model_dict = {}
+    model_dict['name'] = name
 
     # save model class
     model_dict['class'] = model
