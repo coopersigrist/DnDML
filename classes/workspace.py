@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pickle
 import torch
 import os
 
@@ -7,17 +8,31 @@ from .Data import create_wrapper
 from .Model import saveModel, loadModel
 
 
-class pipeline():
+class Workspace():
 
-    def __init__():
+    def __init__(saved_workspace = "default.pt"):
 
+        # Checks whether saved_workspace exists -- if so loads it instead of initializing a new one
+        if os.path.exists(saved_workspace):
+            with open(saved_workspace, 'rb') as f:
+                self = pickle.load(f)
+                return
+
+        
         self.model = None
-        self.trained_model_dict = None
+        self.trained_model_dict = {}
         self.dataset = None
-        self.dataset_dict = {}
+        self.datasets_dict = {}
         self.loss = None
+        self.losses_dict = {}
         self.optimizer = None
+        self.optimizers_dict = {}
+        self.modules_dict = {}
         self.plotting = False
+        self.plot = None
+        self.plot_defaults_dict = {}
+        self.plotted_val_dict = {}
+        self.saved_plots_dict = {}
         self.device = "cpu"
         self.save = False
         self.save_interval = 1
@@ -32,26 +47,44 @@ class pipeline():
 
         for ds in self.torchvision_list:
             self.add_dataset(ds)
-
-    def set_optimizer(self, optimizer):
-
-        self.optimizer = optimizer
-
-    def set_model(self, model):
-        
-        self.model = model
     
-    def set_loss(self, loss):
+    def save_workspace(self, save_name):
+        # Saves the current Workspace to a pickle file with name save_name -- 
+        # this lets us save different groupings of modules, data, etc
 
-        self.loss = loss
+        # TODO Ideally we also save something to identify this workspace for users (maybe a PNG of the model)
+
+        with open(save_name+'.pt', 'wb') as f:
+            pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+
+        pass
+
+    def delete_workspace(self):
+        # TODO First delete all of the data and all other saved elements from this workspace,
+        # then delete this workspace and the corresponding pickle file
+
+        pass
+
+
+    def set_optimizer(self, optimizer_name):
+
+        self.optimizer = self.optimizers_dict[optimizer]
+
+    def set_model(self, model_name):
+        
+        self.model = self.trained_model_dict[model_name]
+    
+    def set_loss(self, loss_name):
+
+        self.loss = self.losses_dict[loss_name]
 
     def add_dataset(self, dataset_name):
 
-        self.dataset_dict[dataset_name] = create_wrapper(dataset_name)
+        self.datasets_dict[dataset_name] = create_wrapper(dataset_name)
 
     def set_dataset(self, dataset_name):
 
-        self.dataset = self.dataset_dict[dataset]
+        self.dataset = self.datasets_dict[dataset]
 
     def save_model(self, model, name):
 
