@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>DnDML</title>
+
+        <link rel = "stylesheet" href = "../static/styles.css">
+    </head>
+    <body></body>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"
+            id="canvas">
+            <!-- Dynamic -->
+        </svg>
+        <div id="parameters">
+            <form>
+                <label for="elemAttribSelector1">Kernel size: </label>
+                <input type="text" id="elemAttribSelector1" placeholder="kernel size" onchange="changeParameter(event)">
+                <br>
+                <label for="elemAttribSelector2">Stride: </label>
+                <input type="text" id="elemAttribSelector2" placeholder="stride" onchange="changeParameter(event)">
+                <br>
+                <label for="elemAttribSelector3">Channels: </label>
+                <input type="text" id="elemAttribSelector3" placeholder="channels" onchange="changeParameter(event)">
+            </form>
+        </div>
+        <script type="text/javascript" src="../static/javascript.js"></script>
+        <script type="text/javascript" src="../static/spawn.js"></script>
+    </body>
+</html>

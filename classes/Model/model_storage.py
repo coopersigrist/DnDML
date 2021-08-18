@@ -2,13 +2,15 @@
 import torch
 import pickle
 
-def saveModel(model):
+
+
+def saveModel(model, name="Default"):
 
     # create a dictionary to save all model information
     model_dict = {}
     
     # save model name
-    model_dict = {}
+    model_dict['name'] = name
 
     # save model class
     model_dict['class'] = model
@@ -18,9 +20,8 @@ def saveModel(model):
 
     # save optimizer state_dict
 
-
     # save model dict to pickle file
-    with open('./saved_models/'+model.__class__.__name__+'.pickle', 'wb') as handle:
+    with open('./saved_models/'+name+'.pickle', 'wb') as handle:
         pickle.dump(model_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
