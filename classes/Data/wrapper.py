@@ -2,7 +2,8 @@ import shutil
 import torch
 import torchvision
 
-def create_wrapper(dataset_name):
+def create_data_wrapper(dataset_name):
+
     '''
     Creates a 'Dataset' class which has deletion functionality and anything else we'd like to add,
     its a wrapper of Trochvision datasets, but we can expand that to other dataset libraries

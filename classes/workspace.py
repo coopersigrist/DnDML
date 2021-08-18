@@ -4,13 +4,17 @@ import pickle
 import torch
 import os
 
-from .Data import create_wrapper
+from .Data import create_data_wrapper
+from .Loss import create_loss_wrapper
 from .Model import saveModel, loadModel
+from .Optimizer import create_optim_wrapper
+
 
 
 class Workspace():
 
-    def __init__(saved_workspace = "default.pt"):
+    def __init__(self, saved_workspace = "default.pt"):
+
 
         # Checks whether saved_workspace exists -- if so loads it instead of initializing a new one
         if os.path.exists(saved_workspace):
@@ -44,10 +48,21 @@ class Workspace():
                                 "Kinetics-400","KMNIST", "LSUN", "LSUNClass", "MNIST", "Omniglot", "PhotoTour", "Places365",
                                 "QMNIST", "SBD", "SBU", "SEMEION", "STL10",
                                 "SVHN", "UCF101","USPS","VOCDetection", "VOCSegmentation"]
-
         for ds in self.torchvision_list:
             self.add_dataset(ds)
     
+        self.torch_optim_list = ["Adadelta","Adagrad","Adam","AdamW","SparseAdam","Adamax",
+                            "ASGD","LBFGS","RMSprop","Rprop","SGD"]
+        for optim in self.torch_optim_list:
+            self.add_optimizer(optim)
+
+        self.torch_loss_list = ["L1Loss","MSELoss","CrossEntropyLoss","CTCLoss","NLLLoss","PoissonNLLLoss",
+                                "GaussianNLLLoss","KLDivLoss","BCELoss","BCEWithLogitsLoss","MarginRankingLoss","HingeEmbeddingLoss", 
+                                "MultiLabelMarginLoss", "HuberLoss","SmoothL1Loss","SoftMarginLoss", "MultiLabelSoftMarginLoss", 
+                                "CosineEmbeddingLoss", "MultiMarginLoss","TripletMarginLoss", "TripletMarginWithDistanceLoss"]
+        for loss in self.torch_loss_list:
+            self.add_optimizer(loss)
+
     def save_workspace(self, save_name):
         # Saves the current Workspace to a pickle file with name save_name -- 
         # this lets us save different groupings of modules, data, etc
@@ -65,26 +80,35 @@ class Workspace():
 
         pass
 
+    def add_optimizer(self, optimizer_name):
+        
+        self.optimizers_dict[optimizer_name] = create_optim_wrapper(optimizer_name)
 
     def set_optimizer(self, optimizer_name):
 
-        self.optimizer = self.optimizers_dict[optimizer]
+        self.optimizer = self.optimizers_dict[optimizer_name]
+
 
     def set_model(self, model_name):
         
         self.model = self.trained_model_dict[model_name]
     
+    def add_loss(self, loss_name):
+        
+        self.losses_dict[loss_name] = create_loss_wrapper(loss_name)
+
     def set_loss(self, loss_name):
 
         self.loss = self.losses_dict[loss_name]
 
     def add_dataset(self, dataset_name):
 
-        self.datasets_dict[dataset_name] = create_wrapper(dataset_name)
+        self.datasets_dict[dataset_name] = create_data_wrapper(dataset_name)
 
     def set_dataset(self, dataset_name):
 
-        self.dataset = self.datasets_dict[dataset]
+        self.dataset = self.datasets_dict[dataset_name]
+
 
     def save_model(self, model, name):
 
