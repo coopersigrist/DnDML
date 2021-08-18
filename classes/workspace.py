@@ -61,7 +61,7 @@ class Workspace():
                                 "MultiLabelMarginLoss", "HuberLoss","SmoothL1Loss","SoftMarginLoss", "MultiLabelSoftMarginLoss", 
                                 "CosineEmbeddingLoss", "MultiMarginLoss","TripletMarginLoss", "TripletMarginWithDistanceLoss"]
         for loss in self.torch_loss_list:
-            self.add_optimizer(loss)
+            self.add_loss(loss)
 
     def save_workspace(self, save_name):
         # Saves the current Workspace to a pickle file with name save_name -- 
