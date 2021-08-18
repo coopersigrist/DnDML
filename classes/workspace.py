@@ -10,9 +10,11 @@ from .Model import saveModel, loadModel
 from .Optimizer import create_optim_wrapper
 
 
+
 class Workspace():
 
     def __init__(self, saved_workspace = "default.pt"):
+
 
         # Checks whether saved_workspace exists -- if so loads it instead of initializing a new one
         if os.path.exists(saved_workspace):
@@ -60,7 +62,7 @@ class Workspace():
                                 "CosineEmbeddingLoss", "MultiMarginLoss","TripletMarginLoss", "TripletMarginWithDistanceLoss"]
         for loss in self.torch_loss_list:
             self.add_optimizer(loss)
-    
+
     def save_workspace(self, save_name):
         # Saves the current Workspace to a pickle file with name save_name -- 
         # this lets us save different groupings of modules, data, etc
@@ -86,6 +88,7 @@ class Workspace():
 
         self.optimizer = self.optimizers_dict[optimizer_name]
 
+
     def set_model(self, model_name):
         
         self.model = self.trained_model_dict[model_name]
@@ -105,6 +108,7 @@ class Workspace():
     def set_dataset(self, dataset_name):
 
         self.dataset = self.datasets_dict[dataset_name]
+
 
     def save_model(self, model, name):
 
