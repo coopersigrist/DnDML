@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css"/>
+    <script defer src="app.js"></script>
+    <title>DnDML</title>
+  </head>
+  
+  <body class="light">
+    
+    <main class="grid-body">
+
+      <header id="global-header">
+
+        <nav class="nav">
+          <a class="active" href="#home">Model</a>
+          <a href="Dataset.html">Dataset</a>
+          <a href="#Training">Training</a>
+          <a href="#Testing">Testing</a>
+          <a href="#Tuning">Tuning</a>
+        </nav>
+  
+        <img id="theme-toggle" src="Assets/Light.svg" alt="UI theme toggle button"/>
+  
+        <button id="train">
+          <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="run"
+              d="M0.5 7.5V2.03238C0.5 0.477792 2.19594 -0.482435 3.52899 0.317395L12.6417 5.78501C13.9364 6.56182 13.9364 8.43818 12.6417 9.21499L3.52899 14.6826C2.19594 15.4824 0.5 14.5222 0.5 12.9676V7.5Z"
+              fill="#254671"/>
+          </svg>
+          Train
+        </button>
+  
+      </header>
+      <ul class="page-options">
+        <li>
+          Prebuilt
+          <ul class="option">
+            <li class="options">
+              <input type="radio" name="Model" id="prebuilt-module" checked/>
+              <label for="prebuilt-module" class="label-inline">Modules</label>
+            </li>
+            <li class="options">
+              <input type="radio" name="Model" id="prebuilt-architecture" />
+              <label for="prebuilt-architecture" class="label-inline"
+                >Architectures</label
+              >
+            </li>
+          </ul>
+        </li>
+        <li>
+          Custom
+          <ul class="option">
+            <li class="options">
+              <input type="radio" name="Model" id="my-module" />
+              <label for="my-module" class="label-inline">Modules</label>
+            </li>
+            <li class="options">
+              <input type="radio" name="Model" id="my-architecture" />
+              <label for="my-architecture" class="label-inline"
+                >Architectures</label
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="svg-assets">
+        <img id="Tanh" src="Assets/Activation/tanh.svg" />
+        <img id="Sigmoid" src="Assets/Activation/sigmoid.svg" />
+        <img id="RelU" src="Assets/Activation/relu.svg" />
+        <img id="Concatenate" src="Assets/Layer/Concatenate.svg" />
+        <img id="Convolution" src="Assets/Layer/Convolution.svg" />
+        <g>
+          <svg
+          class = "svg-item"
+            width="28"
+            height="55"
+            viewBox="0 0 28 55"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path class = "stroke"
+              d="M26 13.75V27.5V41.25C26 44.6022 23.7186 47.5242 20.4665 48.3372L1.5 53.0788V48.125V41.25V27.5V13.75V6.875V1.92116L20.4665 6.66278C23.7186 7.4758 26 10.3978 26 13.75Z"
+              fill="#F4F9FF"
+              stroke="black"
+              stroke-width="3"
+            />
+            <path
+              d="M11.2507 21.8667C11.2507 21.388 11.6387 21 12.1173 21H14.8827C15.3613 21 15.7493 21.388 15.7493 21.8667V24.0924C15.7493 24.8103 16.3313 25.3924 17.0493 25.3924H19.1333C19.612 25.3924 20 25.7804 20 26.259V28.8118C20 29.2905 19.612 29.6785 19.1333 29.6785H17.0493C16.3313 29.6785 15.7493 30.2605 15.7493 30.9785V33.1333C15.7493 33.612 15.3613 34 14.8827 34H12.1173C11.6387 34 11.2507 33.612 11.2507 33.1333V30.9785C11.2507 30.2605 10.6687 29.6785 9.95068 29.6785H7.86667C7.38802 29.6785 7 29.2905 7 28.8118V26.259C7 25.7804 7.38802 25.3924 7.86667 25.3924H9.95068C10.6687 25.3924 11.2507 24.8103 11.2507 24.0924V21.8667Z"
+              fill="black"
+            />
+          </svg>
+        </g>
+        <g>
+          <svg
+            width="38"
+            height="66"
+            viewBox="0 0 38 66"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M36.0714 21.8294V32.875V43.9206C36.0714 48.0961 33.7123 51.9132 29.9776 53.7806L18.1149 59.7119L10.555 63.4919C9.82343 63.8577 8.96229 63.8577 8.23069 63.4919L1.5 60.1265V51.6607V32.875V14.0893V5.62348L8.23068 2.25814C8.96229 1.89234 9.82343 1.89234 10.555 2.25814L18.1149 6.03807L29.9776 11.9694C33.7123 13.8368 36.0714 17.6539 36.0714 21.8294ZM1.42605 60.0895C1.42614 60.0896 1.42624 60.0896 1.42633 60.0897L1.42606 60.0896L1.36623 60.2092L1.42605 60.0895Z"
+              fill="#F4F9FF"
+              stroke="black"
+              stroke-width="3"
+            />
+            <path
+              d="M7.35659 16.1677C6.45327 16.7343 6.45363 18.0597 7.35726 18.6258L14.9775 23.3998C15.9341 23.9991 17.1716 23.3057 17.1716 22.1705V12.6167C17.1716 11.4811 15.9334 10.7878 14.9769 11.3878L7.35659 16.1677Z"
+              fill="#C6B7EC"
+            />
+            <path
+              d="M15.5878 22.4257L7.96751 17.6517C7.7826 17.5358 7.78251 17.2574 7.96738 17.1414L15.5877 12.3616C15.765 12.2504 16.0222 12.3685 16.0222 12.6167V22.1705C16.0222 22.4186 15.7651 22.5368 15.5878 22.4257Z"
+              stroke="black"
+              stroke-opacity="0.2"
+              stroke-width="2.29892"
+            />
+            <path
+              d="M7.35659 31.8002C6.45327 32.3669 6.45363 33.6922 7.35726 34.2583L14.9775 39.0324C15.9341 39.6316 17.1716 38.9383 17.1716 37.8031V28.2492C17.1716 27.1137 15.9334 26.4204 14.9769 27.0204L7.35659 31.8002Z"
+              fill="#EAE3FF"
+            />
+            <path
+              d="M15.5878 38.0583L7.96751 33.2843C7.7826 33.1684 7.78251 32.89 7.96738 32.774L15.5877 27.9941C15.765 27.8829 16.0222 28.0011 16.0222 28.2492V37.8031C16.0222 38.0512 15.7651 38.1694 15.5878 38.0583Z"
+              stroke="black"
+              stroke-opacity="0.2"
+              stroke-width="2.29892"
+            />
+            <path
+              d="M7.35659 47.4331C6.45327 47.9997 6.45363 49.325 7.35726 49.8912L14.9775 54.6652C15.9341 55.2644 17.1716 54.5711 17.1716 53.4359V43.8821C17.1716 42.7465 15.9334 42.0532 14.9769 42.6532L7.35659 47.4331Z"
+              fill="#B39FFB"
+            />
+            <path
+              d="M15.5878 53.6911L7.96751 48.9171C7.7826 48.8012 7.78251 48.5228 7.96738 48.4068L15.5877 43.627C15.765 43.5157 16.0222 43.6339 16.0222 43.8821V53.4359C16.0222 53.684 15.7651 53.8022 15.5878 53.6911Z"
+              stroke="black"
+              stroke-opacity="0.2"
+              stroke-width="2.29892"
+            />
+            <path
+              d="M30.3264 23.9841C31.2297 24.5507 31.2293 25.8761 30.3257 26.4422L22.7054 31.2162C21.7489 31.8155 20.5113 31.1221 20.5113 29.9869V20.4331C20.5113 19.2975 21.7496 18.6042 22.7061 19.2042L30.3264 23.9841Z"
+              fill="#B39FFB"
+            />
+            <path
+              d="M22.0952 30.2421L29.7155 25.4681C29.9004 25.3522 29.9005 25.0738 29.7156 24.9578L22.0953 20.178C21.918 20.0668 21.6608 20.1849 21.6608 20.4331V29.9869C21.6608 30.235 21.9179 30.3532 22.0952 30.2421Z"
+              stroke="black"
+              stroke-opacity="0.2"
+              stroke-width="2.29892"
+            />
+            <path
+              d="M30.3264 39.6166C31.2297 40.1833 31.2293 41.5086 30.3257 42.0747L22.7054 46.8488C21.7489 47.448 20.5113 46.7547 20.5113 45.6195V36.0656C20.5113 34.9301 21.7496 34.2368 22.7061 34.8368L30.3264 39.6166Z"
+              fill="#C6B7EC"
+            />
+            <path
+              d="M22.0952 45.8747L29.7155 41.1007C29.9004 40.9848 29.9005 40.7064 29.7156 40.5904L22.0953 35.8106C21.918 35.6993 21.6608 35.8175 21.6608 36.0656V45.6195C21.6608 45.8676 21.9179 45.9858 22.0952 45.8747Z"
+              stroke="black"
+              stroke-opacity="0.2"
+              stroke-width="2.29892"
+            />
+          </svg>
+        </g>
+
+      </div>
+
+      <section class="option-selection">
+        <div>
+          <select name="Activation" id="Activation_Selection">
+            <option value="RelU">ReLU</option>
+            <option value="Tanh">Tanh</option>
+            <option value="Sigmoid">Sigmoid</option>
+          </select>
+        </div>
+
+        <div>
+          <select name="Layer" id="Layer_Selection">
+            <option value="Dense">Dense</option>
+            <option value="Convolution">Convolution</option>
+            <option value="Max_Pool">Max Pooling</option>
+            <option value="Batch_Norm">Batch Normalization</option>
+            <option value="Dropout">Dropout</option>
+            <option value="Flatten">Flatten</option>
+            <option value="Concatenate">Concatenate</option>
+            <option value="Add">Add</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="training-status" class="svg-selection">
+        <h3>Model Status / Selection</h3>
+      </section>
+
+    </main>
+  </body>
+</html>
