@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, session
 from flask_session import Session
 from markupsafe import escape
+#from classes import workspace
 import os
 import math
 
-TEMPLATE_DIR = os.path.abspath('templates')
-STATIC_DIR = os.path.abspath('static')
+TEMPLATE_DIR = os.path.abspath('gui/templates')
+STATIC_DIR = os.path.abspath('gui/static')
 
 app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR)
 

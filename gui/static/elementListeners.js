@@ -12,7 +12,7 @@ function make_draggable(event){
             bind_draggedElement(event.target.parentNode);
         }
         else{
-            if(event.target.id == "canvas"){
+            if(event.target.classList.contains("box-card-one")){
                 console.log("unbinding selected element");
                 unbind_selectedElement();
             }
@@ -63,14 +63,14 @@ function make_draggable(event){
                         //we should change the x1 y1 values of the edge.
                         let tt = get_translation_transform(draggedElement.group);
                         if(direction){
-                            let x1 = draggedElement.slotOutput.x.baseVal.value + slotWidth / 2 + tt.matrix.e;
-                            let y1 = draggedElement.slotOutput.y.baseVal.value + slotHeight / 2 + tt.matrix.f;
+                            let x1 = draggedElement.slotOutput.cx.baseVal.value + tt.matrix.e;
+                            let y1 = draggedElement.slotOutput.cy.baseVal.value + tt.matrix.f;
                             edges[j].setPosition(x1, y1, edges[j].x2, edges[j].y2);
                         }
                         //otherwise we change the x2 y2 values of the edge
                         else{
-                            let x2 = draggedElement.slotInput.x.baseVal.value + slotWidth / 2 + tt.matrix.e;
-                            let y2 = draggedElement.slotInput.y.baseVal.value + slotHeight / 2 + tt.matrix.f;
+                            let x2 = draggedElement.slotInput.cx.baseVal.value + tt.matrix.e;
+                            let y2 = draggedElement.slotInput.cy.baseVal.value + tt.matrix.f;
                             edges[j].setPosition(edges[j].x1, edges[j].y1, x2, y2);
                         }
                     }

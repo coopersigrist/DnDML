@@ -9,14 +9,15 @@ let directedGraph = [], undirectedGraph = [];
 
 let selectedSlot = {obj: null, elem: null, type: "input"};
 
-var NS = "http://www.w3.org/2000/svg", elemWidth = 80, elemHeight = 40, slotWidth = 10, slotHeight = 10;
+var NS = "http://www.w3.org/2000/svg";
 
 //the lists we are storing our Element and Edge objects in. Both objects have IDs which are stored in the JS object itself
 //and HTML DOM element ID. The IDs correspond to the index at which they are stored in.
 var elements = [], edges = [];
 
 //the window we are drawing our elements in
-let svgWindow = document.getElementById("canvas");
+let svgWindow = document.getElementsByClassName("box-card-one")[0];
+console.log(svgWindow);
 
 function bind_selectedElement(htmlElement){
     id = parseInt(htmlElement.id);
@@ -61,10 +62,10 @@ function bind_slot(newSelectedSlot){
             let translationTransform2 = get_translation_transform(selectedSlot.elem.parentNode);
 
             //selectedSlot is the output slot, and newSelectedSlot is the input slot
-            let x1 = newSelectedSlot.x.baseVal.value + slotWidth / 2 + translationTransform1.matrix.e;
-            let y1 = newSelectedSlot.y.baseVal.value + slotHeight / 2 + translationTransform1.matrix.f;
-            let x2 = selectedSlot.elem.x.baseVal.value + slotWidth / 2 + translationTransform2.matrix.e;
-            let y2 = selectedSlot.elem.y.baseVal.value + slotHeight / 2 + translationTransform2.matrix.f;
+            let x1 = newSelectedSlot.cx.baseVal.value + translationTransform1.matrix.e;
+            let y1 = newSelectedSlot.cy.baseVal.value + translationTransform1.matrix.f;
+            let x2 = selectedSlot.elem.cx.baseVal.value + translationTransform2.matrix.e;
+            let y2 = selectedSlot.elem.cy.baseVal.value + translationTransform2.matrix.f;
             edges.push(new Edge(parseInt(selectedSlot.parentObj.id), parseInt(newSelectedSlot.parentNode.id), x2, y2, x1, y1));
             parent1.slotInputAvailable = false;
             selectedSlot.parentObj.slotOutputAvailable = false;
@@ -87,10 +88,10 @@ function bind_slot(newSelectedSlot){
             let translationTransform2 = get_translation_transform(selectedSlot.elem.parentNode);
 
             //selectedSlot is the input slot, and newSelectedSlot is the output slot
-            let x1 = newSelectedSlot.x.baseVal.value + slotWidth / 2 + translationTransform1.matrix.e;
-            let y1 = newSelectedSlot.y.baseVal.value + slotHeight / 2 + translationTransform1.matrix.f;
-            let x2 = selectedSlot.elem.x.baseVal.value + slotWidth / 2 + translationTransform2.matrix.e;
-            let y2 = selectedSlot.elem.y.baseVal.value + slotHeight / 2 + translationTransform2.matrix.f;
+            let x1 = newSelectedSlot.cx.baseVal.value + translationTransform1.matrix.e;
+            let y1 = newSelectedSlot.cy.baseVal.value + translationTransform1.matrix.f;
+            let x2 = selectedSlot.elem.cx.baseVal.value + translationTransform2.matrix.e;
+            let y2 = selectedSlot.elem.cy.baseVal.value + translationTransform2.matrix.f;
             edges.push(new Edge(parseInt(newSelectedSlot.parentNode.id), parseInt(selectedSlot.parentObj.id), x1, y1, x2, y2));
             parent1.slotOutputAvailable = false;
             selectedSlot.parentObj.slotInputAvailable = false;
