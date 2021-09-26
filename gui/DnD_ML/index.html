@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css" />
+    <script defer src="app.js"></script>
+    <title>DnDML</title>
+  </head>
+
+  <body class="light">
+    <main class="grid-body">
+      <header id="global-header">
+        <nav class="nav">
+          <a class="active" href="#home">Model</a>
+          <a href="Dataset.html">Dataset</a>
+          <a href="datatest.html">Training</a>
+          <a href="#Testing">Testing</a>
+          <a href="#Tuning">Tuning</a>
+        </nav>
+
+        <img
+          onclick="toggleTheme()"
+          id="theme-toggle"
+          src="Assets/Light.svg"
+          alt="Theme toggle switch"
+        />
+
+        <button id="train">
+          <svg
+            width="14"
+            height="15"
+            viewBox="0 0 14 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              class="run"
+              d="M0.5 7.5V2.03238C0.5 0.477792 2.19594 -0.482435 3.52899 0.317395L12.6417 5.78501C13.9364 6.56182 13.9364 8.43818 12.6417 9.21499L3.52899 14.6826C2.19594 15.4824 0.5 14.5222 0.5 12.9676V7.5Z"
+              fill="#254671"
+            />
+          </svg>
+          Train
+        </button>
+      </header>
+      <ul class="page-options">
+        <li>
+          Prebuilt
+          <ul class="option">
+            <li class="options">
+              <input type="radio" name="Model" id="prebuilt-module" checked />
+              <label for="prebuilt-module" class="label-inline">Modules</label>
+            </li>
+            <li class="options">
+              <input type="radio" name="Model" id="prebuilt-architecture" />
+              <label for="prebuilt-architecture" class="label-inline"
+                >Architectures</label
+              >
+            </li>
+          </ul>
+        </li>
+        <li>
+          Custom
+          <ul class="option">
+            <li class="options">
+              <input type="radio" name="Model" id="my-module" />
+              <label for="my-module" class="label-inline">Modules</label>
+            </li>
+            <li class="options">
+              <input type="radio" name="Model" id="my-architecture" />
+              <label for="my-architecture" class="label-inline"
+                >Architectures</label
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="svg-assets">
+        <svg
+          class="add-layer"
+          width="24"
+          height="42"
+          viewBox="0 0 24 42"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            id="add-lay"
+            d="M22 21V11C22 8.06147 20.0001 5.50002 17.1493 4.78732L3.24254 1.31063C2.61139 1.15285 2 1.63021 2 2.28078V6V11V21V31V36V39.7192C2 40.3698 2.61139 40.8472 3.24254 40.6894L17.1493 37.2127C20.0001 36.5 22 33.9385 22 31V21Z"
+            fill="#F4F9FF"
+            stroke="black"
+            stroke-width="2.5"
+          />
+          <path
+            id="add-glyph"
+            d="M10.1823 17.1394C10.1823 16.6607 10.5704 16.2727 11.049 16.2727H12.5874C13.0661 16.2727 13.4541 16.6607 13.4541 17.1394V18.1672C13.4541 18.8851 14.0361 19.4672 14.7541 19.4672H15.6788C16.1575 19.4672 16.5455 19.8552 16.5455 20.3338V21.7177C16.5455 22.1963 16.1575 22.5843 15.6788 22.5843H14.7541C14.0361 22.5843 13.4541 23.1664 13.4541 23.8843V24.8606C13.4541 25.3392 13.0661 25.7273 12.5874 25.7273H11.049C10.5704 25.7273 10.1823 25.3392 10.1823 24.8606V23.8843C10.1823 23.1664 9.60032 22.5843 8.88235 22.5843H7.95761C7.47896 22.5843 7.09094 22.1963 7.09094 21.7177V20.3338C7.09094 19.8552 7.47896 19.4672 7.95761 19.4672H8.88235C9.60032 19.4672 10.1823 18.8851 10.1823 18.1672V17.1394Z"
+            fill="black"
+          />
+        </svg>
+      </div>
+
+      <section class="option-selection">
+        <h3>Prebuilt - Modules</h3>
+        <ul>
+          <li>Lorem ipsum dolor sit amet consectetur.</li>
+          <li>Similique aliquam reiciendis odit dicta et.</li>
+          <li>Eius quibusdam ipsam rerum eveniet adipisci?</li>
+          <li>Reprehenderit quae culpa pariatur dolore ducimus?</li>
+          <li>Nostrum quaerat soluta repudiandae inventore corporis!</li>
+          <li>Enim, perferendis? Maxime ducimus sapiente fuga.</li>
+          <li>Cupiditate voluptatibus facere amet perferendis sed!</li>
+          <li>Perspiciatis quibusdam explicabo maxime nisi voluptatem.</li>
+          <li>Nobis facere fugiat illum ea perspiciatis?</li>
+          <li>Eveniet quis expedita neque aliquid id?</li>
+          <li>Provident eos pariatur voluptatibus velit nihil!</li>
+          <li>Officiis autem ut velit libero nemo?</li>
+          <li>Repellendus iste sint voluptates non provident?</li>
+          <li>Praesentium ea corrupti repellendus cum assumenda.</li>
+          <li>Exercitationem voluptate totam consectetur error saepe!</li>
+        </ul>
+      </section>
+
+      <section class="training-status" class="svg-selection">
+        <h3>Model Status / Selection</h3>
+        <div>
+          <select name="Activation" id="Activation_Selection">
+            <option value="RelU">ReLU</option>
+            <option value="Tanh">Tanh</option>
+            <option value="Sigmoid">Sigmoid</option>
+          </select>
+        </div>
+
+        <div>
+          <select name="Layer" id="Layer_Selection">
+            <option value="Dense">Dense</option>
+            <option value="Convolution">Convolution</option>
+            <option value="Max_Pool">Max Pooling</option>
+            <option value="Batch_Norm">Batch Normalization</option>
+            <option value="Dropout">Dropout</option>
+            <option value="Flatten">Flatten</option>
+            <option value="Concatenate">Concatenate</option>
+            <option value="Add">Add</option>
+          </select>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
