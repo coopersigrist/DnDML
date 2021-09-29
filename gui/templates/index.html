@@ -1,28 +1,72 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>DnDML</title>
-
-        <link rel = "stylesheet" href = "../static/styles.css">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="../static/style.css">
+        <link rel="stylesheet" href="../static/responsive.css">
     </head>
-    <body></body>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"
-            id="canvas">
-            <!-- Dynamic -->
-        </svg>
-        <div id="parameters">
-            <form>
-                <label for="elemAttribSelector1">Kernel size: </label>
-                <input type="text" id="elemAttribSelector1" placeholder="kernel size" onchange="changeParameter(event)">
-                <br>
-                <label for="elemAttribSelector2">Stride: </label>
-                <input type="text" id="elemAttribSelector2" placeholder="stride" onchange="changeParameter(event)">
-                <br>
-                <label for="elemAttribSelector3">Channels: </label>
-                <input type="text" id="elemAttribSelector3" placeholder="channels" onchange="changeParameter(event)">
-            </form>
+
+    <body class="dark-bg">
+        
+
+        <div class="main-area">
+
+            <div class="header-area">
+                <div class="header-left">
+                    <ul>
+                        <li><a href="">Model</a></li>
+                        <li><a href="">Dataset</a></li>
+                        <li><a href="">Training</a></li>
+                        <li><a href="">Testing</a></li>
+                        <li><a href="">Tuning</a></li>
+                    </ul>
+                </div>
+                <div class="header-right">
+                    <a href="">Training</a>
+                </div>
+            </div>
+
+            <div class="bigBox-area">
+                <div class="menu-area">
+                    <ul>
+                        <li><a href=""><img src="../static/img/angle-right.svg" alt="">Dataset</a></li> 
+                        <li><a href=""><img src="../static/img/angle-right.svg" alt="">Model</a></li> 
+                        <li><a href=""><img src="../static/img/angle-right.svg" alt="">Training</a></li> 
+                        <li><a href=""><img src="../static/img/angle-right.svg" alt="">Tuning</a></li> 
+                        <li><a href=""><img src="../static/img/angle-right.svg" alt="">Testing</a></li> 
+                    </ul>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="box-card-one">
+                    <!-- Dynamic -->
+                </svg>
+            </div>
+            
+
+            <div class="boxareaTwo">
+                <div class="small-box-left">
+                    <div class="card-warp">
+                        
+                    </div>
+                </div>
+                <div class="small-box-right">
+                    <div class="card-warp">
+                        
+                    </div>
+                </div>
+            </div>
+
+
         </div>
-        <script type="text/javascript" src="../static/javascript.js"></script>
+        <script type="text/javascript" src="../static/utility.js"></script>
+        <script type="text/javascript" src="../static/main.js"></script>
         <script type="text/javascript" src="../static/spawn.js"></script>
+        <script type="text/javascript" src="../static/elementListeners.js"></script>
+        <script type="text/javascript" src="../static/edgeListeners.js"></script>
+        <script type="text/javascript" src="../static/toBackend.js"></script>
+
     </body>
+
 </html>

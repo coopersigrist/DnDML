@@ -1,0 +1,342 @@
+/* XL Device :1200px. */
+@media (min-width: 1200px) and (max-width: 1449px) {
+    
+
+}
+
+
+
+
+@media (min-width: 1200px) and (max-width: 1300px) {
+
+
+
+}
+
+
+
+
+
+
+
+/* LG Device :992px. */
+@media (min-width: 992px) and (max-width: 1200px) {
+    .header-left ul li {
+        margin-right: 40px;
+    }
+    .header-left ul li a {
+        font-size: 20px;
+    }
+    .header-right a {
+        font-size: 20px;
+    }
+    .menu-area ul li a {
+        font-size: 20px;
+    }
+    .menu-area li img {
+        width: 10px;
+    }
+    .menu-area {
+        width: 22%;
+        padding-right: 15px;
+    }
+    .box-card-one {
+        width: 78%;
+    }
+    .menu-warp {
+        padding: 25px 20px;
+    }
+    a.cursor-point-2 img {
+        width: 180px;
+    }
+    .small-box-left {
+        padding-right: 5px;
+    }
+    .menu-area li img {
+        width: 15px;
+    }
+
+
+
+
+
+
+
+
+
+}
+ 
+
+
+
+
+
+
+
+/* LG Device :992px. */
+@media (min-width: 768px) and (max-width: 991px) {
+    .header-left ul li {
+        margin-right: 15px;
+    }
+    .header-left ul li a {
+        font-size: 18px;
+    }
+    .header-right a {
+        font-size: 18px;
+    }
+    .menu-area ul li a {
+        font-size: 18px;
+    }
+    .menu-area li img {
+        width: 8px;
+    }
+    .header-left li:last-child {
+        margin: 0;
+    }
+    .card-warp {
+        height: 300px;
+    }
+    .box-card-one {
+        height: 430px;
+    }
+    .menu-area {
+        height: 430px;
+    }
+    .header-area {
+        margin-bottom: 30px;
+    }
+    .menu-warp {
+        padding: 35px 15px;
+    }
+    .menu-area {
+        width: 25%;
+        padding-right: 15px;
+    }
+    .box-card-one {
+        width: 75%;
+    }
+    .light-bg .card-warp {
+        height: 290px;
+    }
+    .share-icon {
+        margin-bottom: 20px;
+    }
+    .small-box-left {
+        padding-right: 0px;
+    }
+    .share-icon li img {
+        width: 14px;
+    }
+    a.cursor-point-2 img {
+        width: 180px;
+    }
+    .menu-area {
+        padding-right: 0;
+    }
+    .boxleft-4 {
+        width: 25%;
+        padding-right: 15px;
+    }
+    .boxright-4 {
+        width: 75%;
+    }
+    .status-box {
+        padding: 15px;
+        height: 290px;
+    }
+    .status-box h4 {
+        font-size: 20px;
+    }
+    .status-box button img {
+        margin-right: 10px;
+        width: 12px;
+    }
+    .max-box {
+        height: 720px;
+    }
+
+
+
+
+
+
+
+}
+ 
+
+
+
+
+
+
+/* SM Small Device :320px. */
+@media only screen and (max-width: 767px) {
+    .menu-area {
+        width: 100%;
+        padding-right: 0;
+    }
+    .main-area {
+        padding: 20px 15px;
+    }
+    .header-left ul li {
+        display: inline;
+        margin-right: 0;
+    }
+    .header-area {
+        display: block;
+    }
+    .header-left ul li a {
+        font-size: 14px;
+        padding: 8px 7px;
+    }
+    .header-right a {
+        font-size: 15px;
+        padding: 10px 20px;
+        letter-spacing: .5px;
+    }
+    .header-right {
+        width: 100%;
+        display: block;
+        text-align: right;
+        margin-top: 20px;
+    }
+    .menu-area ul li a {
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: .5px;
+    }
+    .menu-area li img {
+        width: 8px;
+    }
+
+    .menu-area {
+        width: 100%;
+        padding-right: 0;
+        height: auto;
+        margin-bottom: 35px;
+    }
+    .box-card-one {
+        width: 100%;
+        height: 300px;
+        border: 4px solid rgba(248, 248, 242, 0.13);
+    }
+    a.cursor-point img {
+        width: 50px;
+    }
+    .small-box-left {
+        width: 100%;
+        height: 280px;
+        padding-right: 0;
+        margin-bottom: 25px;
+    }
+    .small-box-right {
+        width: 100%;
+        padding-left: 0;
+        border-radius: 15px;
+    }
+   
+    .boxareaTwo {
+        display: inline-block;
+        width: 100%;
+    }
+    .card-warp {
+        height: 260px;
+        margin-top: 25px;
+    }
+    .small-box-right .card-warp {
+        margin: 0;
+    }
+    .light-bg .card-warp {
+        height: 250px;
+    }
+    .share-icon li img {
+        width: 18px;
+    }
+    a.cursor-point-2 img {
+        width: 100px;
+    }
+    .spc {
+        height: 20px;
+    }
+    .boxleft-4 {
+        width: 100%;
+        float: left;
+        height: 845px;
+        padding-right: 0;
+    }
+    .boxright-4 {
+        width: 100%;
+    }
+    .boxleft-4 {
+        height: auto;
+        padding-right: 0;
+        margin-bottom: 25px;
+    }
+    .max-box {
+        width: 100%;
+        height: 240px;
+        border: 4px solid rgba(225, 225, 225, 0.18);
+    }
+    .status-box {
+        width: 100%;
+        padding: 25px;
+        height: 240px;
+    }
+    .menu-area {
+        margin-bottom: 25px;
+    }
+    .status-box h4 {
+        font-size: 20px;
+    }
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+/* SM Small Device :550px. */
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+    .header-left ul li a {
+        font-size: 16px;
+        padding: 8px 14px;
+    }
+    .box-card-one {
+        width: 100%;
+        height: 360px;
+        border: 4px solid rgba(248, 248, 242, 0.13);
+    }
+    .card-warp {
+        height: 290px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+ 
+}
