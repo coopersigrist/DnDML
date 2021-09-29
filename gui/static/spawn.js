@@ -1,4 +1,5 @@
 //Draws the correct elements and appendChild them all to group
+// element_svg_config(group: DOM, type: string): DOM[3]
 function element_svg_config(group, type){
     //This list will be returned to return the group and slot variables.
     let toReturn = [];
@@ -59,6 +60,7 @@ function element_svg_config(group, type){
     
     return toReturn;
 }
+
 class Element{
     static highestID = 0;
 
@@ -107,6 +109,7 @@ class Element{
     }
 }
 
+// spawnElem(event: Event): void
 function spawnElem(event){
     let svgWindow = document.getElementsByClassName("box-card-one")[0];
     if(event.which == 2){
@@ -115,6 +118,7 @@ function spawnElem(event){
     }
 }
 
+// spawnElemHelper()
 function spawnElemHelper(svg, x, y){
     topLeft = {x: x,
                y: y};

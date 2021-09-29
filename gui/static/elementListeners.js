@@ -1,4 +1,6 @@
-function make_draggable(event){
+// Attach the event listeners to all draggable objects
+// attach_draggable_listeners(event: Event): void
+function attach_draggable_listeners(event){
 
     let offset, transform;
 
@@ -8,13 +10,13 @@ function make_draggable(event){
             return;
         }
         else if(event.target.parentNode != null && event.target.parentNode.classList.contains('draggable-group')){
-            bind_selectedElement(event.target.parentNode);
-            bind_draggedElement(event.target.parentNode);
+            bind_selected_element(event.target.parentNode);
+            bind_dragged_element(event.target.parentNode);
         }
         else{
             if(event.target.classList.contains("box-card-one")){
                 console.log("unbinding selected element");
-                unbind_selectedElement();
+                unbind_selected_element();
             }
             return;
         }
@@ -80,7 +82,7 @@ function make_draggable(event){
     }
 
     function end_drag(event) {
-        unbind_draggedElement();
+        unbind_dragged_element();
     }
     svgWindow.addEventListener('mousedown', start_drag);
     svgWindow.addEventListener('mousemove', drag);
@@ -93,9 +95,10 @@ function make_draggable(event){
     svgWindow.addEventListener('touchcancel', end_drag);
 }
 
-svgWindow.addEventListener('load', make_draggable);
+svgWindow.addEventListener('load', attach_draggable_listeners);
 
-//listener for setting up the parameters of elements
+// listener for setting up the parameters of elements
+// parameter_changed(event: Event): void
 function parameter_changed(event){
     let textInput = event.target;
     if(textInput.id == 'elemAttribSelector1' && selectedElement != null){

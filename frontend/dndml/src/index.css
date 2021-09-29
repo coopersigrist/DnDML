@@ -1,0 +1,248 @@
+@font-face { font-family: Lato; src: url('Assets/Lato-Bold.ttf'); }
+
+:root{
+  /* same across both themes */
+  --click-bg: #2CA6FF;
+  --hover-border: #2CA6FF;
+  --click-primary: #FFF;
+  --active-bg: green;
+  --active-primary: #FFF;
+
+  font-size: 16px;
+  font-family: Lato; 
+}
+
+.light {
+  --bg:#D7E8FF;
+  --fg:#F7F9FD;
+  --primary: #254671;
+  --hover-bg: #B9DAF9;
+
+    /* on click and active train button states will not have a border */
+    --Train-btn-bg: #FFF;
+    --Train-btn-border: #254671;
+
+    /* page-options */
+    --Page-options-border: #ADBED6;
+}
+
+.dark {
+  --bg: #161926;
+  --fg:#454862;
+  --primary: #CBD7FF;
+  --hover-bg: #454862;
+  
+  /* train button on click and active states will have same border color */
+  --Train-btn-bg: #001E33;
+  --Train-btn-border: #CBD7FF;
+
+  /* page-options */
+  --Page-options-border: #2C2D3D;
+}
+
+* { 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--primary);
+    height: 100vh;
+    padding: 15px;
+  }
+
+#train {
+    background-color: var(--Train-btn-bg);
+    font-family: Lato;
+    color: var(--primary);
+    cursor: pointer;
+    padding: 7px 12px;
+    text-align: center;
+    font-size: 1.125rem;
+    border-width: 3px;
+    border-style: solid ;
+    border-color: var(--Train-btn-border);
+    border-radius: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+  }
+
+ .run{
+    fill: var(--primary);
+    padding-right: 10px;
+  }
+
+#global-header {
+    display: flex;
+    flex-wrap: wrap;
+    grid-column: 1/-1;
+  }
+
+#theme-toggle{
+padding: 10px 15px;
+cursor:pointer;
+/* preserving gap when viewport compressed in horizontal direction */
+margin-right: 10px;
+}
+
+.navbar a {
+    float: left;
+    text-align: center;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 1.125rem;
+    color: var(--primary);
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+  
+  .navbar 
+  a:hover {
+    background-color: var(--hover-bg);
+  }
+  
+  .navbar a.active {
+    background-color: #2CA6FF;
+    color: #FFFFFF;
+  }
+ 
+  #train:hover {
+    border-style: solid ;
+    border-color: #2CA6FF;
+    color: #2CA6FF;
+  }
+
+  #train:hover .run{
+    fill: var(--hover-border);
+  }
+  
+  #train:active {
+    background-color: var(--click-bg);
+    border-color: var(--click-bg);
+    color: #FFFFFF;
+  }
+
+  #train:active .run{
+    fill: var(--active-primary);
+  }
+
+  select {
+    font-family: Lato;
+  }
+
+.page-options{
+  box-sizing: border-box;
+  font-size: 1.125rem;
+  padding: 10% 5% 5% 20%;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: var(--Page-options-border);
+  border-width: 10px;
+  color: var(--primary);
+  padding-bottom: auto;
+}
+
+.option {
+  list-style: none;
+  padding: 10px 0px 40px 0px;
+  font-size: 1rem;
+
+}
+
+.options {
+  padding: 5px 0px;
+  border-radius: 5px;
+}
+
+.options :hover{
+  background-color: var(--hover-bg);
+  border-radius: 2px;
+}
+
+.label-inline {
+  cursor: pointer;
+}
+
+
+.grid-body {
+    display: grid;
+    height: 100%;
+    gap: 15px;
+    grid-template-columns: 2fr 3fr 5fr;
+    grid-template-rows: auto 7fr 3fr;
+  }
+
+  .option-selection {
+    background-color: var(--fg);
+    border-radius: 10px;
+    padding: 10px;
+    grid-column: 1 / 3;
+    grid-row: 3/4;
+  }
+
+  .svg-assets {
+    background-color: var(--fg);
+    border-radius: 10px;
+    grid-column: 2 / 4;
+    grid-row: 2/3;
+    padding: 2rem;
+  }
+
+  .svgArea{
+    width: 80%;
+    float: left;
+    height: 490px;
+    background-color: #3D445E;
+    border-radius: 15px;
+    padding: 20px;
+    border-right: 5px solid rgba(248, 248, 242, 0.13);
+    position: relative;
+  }
+
+  .page-options{
+    grid-row: 2/3;
+  }
+
+  .training-status{
+    background-color: var(--fg);
+    border-radius: 10px;
+    padding: 15px;
+  }
+
+
+  @media only screen and (min-width: 700px ) and (max-width: 1050px) {
+    .page-options{
+      grid-row: 3;
+      grid-column: 1/3;
+    }
+    .svg-assets{
+      grid-column: 1/-1;
+      grid-row:2;
+    }
+    .option-selection{
+      grid-row: 3;
+      grid-column: 3/4;
+    }
+  }
+  
+  @media only screen and (max-width: 700px) {
+    .page-options{
+      grid-row: 3;
+      grid-column: 1/-1;
+    }
+    .svg-assets{
+      grid-column: 1/-1;
+      grid-row:2;
+    }
+  }
+
+  @media only screen and (min-width: 2000px) {
+    body{
+      width: 700px;
+      margin:auto;
+    }
+  }
+

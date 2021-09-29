@@ -1,3 +1,4 @@
+// remove_edge(event: Event): void
 function remove_edge(event){
     if(event.target.classList.contains('edge')){
         let ID = event.target.id, i;
@@ -25,6 +26,7 @@ function remove_edge(event){
 svgWindow.addEventListener('mousedown', remove_edge);
 
 //Attemps to remove soemthing from a list.
+// remove_from_list(theList: number[], toRemove: number): boolean
 function remove_from_list(theList, toRemove){
     let index = theList.indexOf(toRemove);
     if(index > -1){

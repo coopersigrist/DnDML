@@ -16,10 +16,11 @@ var NS = "http://www.w3.org/2000/svg";
 var elements = [], edges = [];
 
 //the window we are drawing our elements in
-let svgWindow = document.getElementsByClassName("box-card-one")[0];
+let svgWindow = document.getElementsByClassName("svgArea")[0];
 console.log(svgWindow);
 
-function bind_selectedElement(htmlElement){
+// bind_selected_element(htmlElement: DOM): void
+function bind_selected_element(htmlElement){
     id = parseInt(htmlElement.id);
     selectedElement = elements[id];
     document.getElementById("elemAttribSelector1").value = selectedElement.kernelSize;
@@ -27,22 +28,26 @@ function bind_selectedElement(htmlElement){
     document.getElementById("elemAttribSelector3").value = selectedElement.channels;
 }
 
-function unbind_selectedElement(){
+// bind_selected_element(): void
+function unbind_selected_element(){
     document.getElementById("elemAttribSelector1").value = "";
     document.getElementById("elemAttribSelector2").value = "";
     document.getElementById("elemAttribSelector3").value = "";
     selectedElement = null;
 }
 
-function bind_draggedElement(htmlElement){
+// bind_dragged_element(htmlElement: DOM): void
+function bind_dragged_element(htmlElement){
     id = parseInt(htmlElement.id);
     draggedElement = elements[id];
 }
 
-function unbind_draggedElement(){
+// unbind_dragged_element(): void
+function unbind_dragged_element(){
     draggedElement = null;
 }
 
+// bind_slot(newSelectedSlot: DOM): void
 function bind_slot(newSelectedSlot){
 
     //the relevant JS Element object for the new selected slot stored in parent1
