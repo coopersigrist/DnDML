@@ -1,0 +1,80 @@
+<head>
+  <link rel="stylesheet" href="main.css" />
+  <script defer src="app.js"></script>
+</head>
+<body class="light">
+  <header id="global-header">
+    <nav class="nav">
+      <a href="/">Model</a>
+      <a class="active" href="Dataset.html">Dataset</a>
+      <a href="#Training">Training</a>
+      <a href="#Testing">Testing</a>
+      <a href="#Tuning">Tuning</a>
+    </nav>
+
+    <img
+      id="theme-toggle"
+      src="Assets/Light.svg"
+      alt="UI theme toggle button"
+    />
+
+    <button id="train">
+      <svg
+        width="14"
+        height="15"
+        viewBox="0 0 14 15"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          class="run"
+          d="M0.5 7.5V2.03238C0.5 0.477792 2.19594 -0.482435 3.52899 0.317395L12.6417 5.78501C13.9364 6.56182 13.9364 8.43818 12.6417 9.21499L3.52899 14.6826C2.19594 15.4824 0.5 14.5222 0.5 12.9676V7.5Z"
+          fill="#254671"
+        />
+      </svg>
+      Train
+    </button>
+  </header>
+
+  <div class="datasetselect">
+    <label for="dataset" class="heading labeldata">Training Dataset:</label>
+    <select name="dataset" id="dataset">
+      <option value="MNIST">MNIST</option>
+      <option value="CIFAR-10">CIFAR-10</option>
+    </select>
+  </div>
+
+  <div class="dataflex">
+    <section class="heading classul">
+      Classifications:
+      <ul class="classifications">
+        <li class="item" id="activeli">All</li>
+        <li class="item">0</li>
+        <li class="item">1</li>
+        <li class="item">2</li>
+        <li class="item">3</li>
+        <li class="item">4</li>
+        <li class="item">5</li>
+        <li class="item">6</li>
+        <li class="item">7</li>
+        <li class="item">8</li>
+        <li class="item">9</li>
+      </ul>
+    </section>
+    <section class="heading Predictions">
+      Predictions:
+      <div class="datagrid">
+        <div class="datapoint"><img src="minst/0.jpg" /></div>
+        <div class="datapoint"><img src="minst/1.jpg" /></div>
+        <div class="datapoint"><img src="minst/2.jpg" /></div>
+        <div class="datapoint"><img src="minst/3.jpg" /></div>
+        <div class="datapoint"><img src="minst/4.jpg" /></div>
+        <div class="datapoint"><img src="minst/5.jpg" /></div>
+        <div class="datapoint"><img src="minst/6.jpg" /></div>
+        <div class="datapoint"><img src="minst/7.jpg" /></div>
+        <div class="datapoint"><img src="minst/8.jpg" /></div>
+        <div class="datapoint"><img src="minst/9.jpg" /></div>
+      </div>
+    </section>
+  </div>
+</body>

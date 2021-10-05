@@ -1,5 +1,15 @@
 @font-face { font-family: Lato; src: url('Assets/Lato-Bold.ttf'); }
 
+select {
+  font-family: Lato;
+}
+
+* { 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 :root{
   /* same across both themes */
   --click-bg: #2CA6FF;
@@ -18,14 +28,13 @@
   --primary: #254671;
   --hover-bg: #B9DAF9;
 
-    /* on click and active train button states will not have a border */
-    --Train-btn-bg: #FFF;
-    --Train-btn-border: #254671;
+  /* on click and active train button states will not have a border */
+  --Train-btn-bg: #FFF;
+  --Train-btn-border: #254671;
 
-    /* page-options */
-    --Page-options-border: #ADBED6;
+  /* page-options */
+  --Page-options-border: #ADBED6;
 }
-
 .dark {
   --bg: #161926;
   --fg:#454862;
@@ -40,167 +49,129 @@
   --Page-options-border: #2C2D3D;
 }
 
-* { 
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+body {
+  background-color: var(--bg);
+  color: var(--primary);
+  height: 100vh;
+  padding: 15px;
 }
 
-body {
-    background-color: var(--bg);
-    color: var(--primary);
-    height: 100vh;
-    padding: 15px;
-  }
+.navbar button {
+  float: left;
+  text-align: center;
+  padding: 10px 15px;
+  text-decoration: none;
+  font-size: 1.125rem;
+  color: var(--primary);
+  border-radius: 10px;
+  margin-right: 10px;
+  border: none;
+  background-color: inherit;
+  outline: none;
+}
+.navbar button:hover {
+  background-color: var(--hover-bg);
+}
+.navbar button.active {
+  background-color: #2CA6FF;
+  color: #FFFFFF;
+}
+#theme-toggle{
+  padding: 10px 15px;
+  cursor:pointer;
+  /* preserving gap when viewport compressed in horizontal direction */
+  margin-right: 10px;
+}
 
 #train {
-    background-color: var(--Train-btn-bg);
-    font-family: Lato;
-    color: var(--primary);
-    cursor: pointer;
-    padding: 7px 12px;
-    text-align: center;
-    font-size: 1.125rem;
-    border-width: 3px;
-    border-style: solid ;
-    border-color: var(--Train-btn-border);
-    border-radius: 10px;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: auto;
-  }
-
- .run{
-    fill: var(--primary);
-    padding-right: 10px;
-  }
-
-#global-header {
-    display: flex;
-    flex-wrap: wrap;
-    grid-column: 1/-1;
-  }
-
-#theme-toggle{
-padding: 10px 15px;
-cursor:pointer;
-/* preserving gap when viewport compressed in horizontal direction */
-margin-right: 10px;
-}
-
-.navbar a {
-    float: left;
-    text-align: center;
-    padding: 10px 15px;
-    text-decoration: none;
-    font-size: 1.125rem;
-    color: var(--primary);
-    border-radius: 10px;
-    margin-right: 10px;
-  }
-  
-  .navbar 
-  a:hover {
-    background-color: var(--hover-bg);
-  }
-  
-  .navbar a.active {
-    background-color: #2CA6FF;
-    color: #FFFFFF;
-  }
- 
-  #train:hover {
-    border-style: solid ;
-    border-color: #2CA6FF;
-    color: #2CA6FF;
-  }
-
-  #train:hover .run{
-    fill: var(--hover-border);
-  }
-  
-  #train:active {
-    background-color: var(--click-bg);
-    border-color: var(--click-bg);
-    color: #FFFFFF;
-  }
-
-  #train:active .run{
-    fill: var(--active-primary);
-  }
-
-  select {
-    font-family: Lato;
-  }
-
-.page-options{
-  box-sizing: border-box;
-  font-size: 1.125rem;
-  padding: 10% 5% 5% 20%;
-  border-radius: 10px;
-  border-style: solid;
-  border-color: var(--Page-options-border);
-  border-width: 10px;
+  background-color: var(--Train-btn-bg);
+  font-family: Lato;
   color: var(--primary);
-  padding-bottom: auto;
-}
-
-.option {
-  list-style: none;
-  padding: 10px 0px 40px 0px;
-  font-size: 1rem;
-
-}
-
-.options {
-  padding: 5px 0px;
-  border-radius: 5px;
-}
-
-.options :hover{
-  background-color: var(--hover-bg);
-  border-radius: 2px;
-}
-
-.label-inline {
   cursor: pointer;
+  padding: 7px 12px;
+  text-align: center;
+  font-size: 1.125rem;
+  border-width: 3px;
+  border-style: solid ;
+  border-color: var(--Train-btn-border);
+  border-radius: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+}
+#train:hover {
+  border-style: solid ;
+  border-color: #2CA6FF;
+  color: #2CA6FF;
+}
+#train:hover .run{
+  fill: var(--hover-border);
+}
+#train:active {
+  background-color: var(--click-bg);
+  border-color: var(--click-bg);
+  color: #FFFFFF;
+}
+#train:active .run{
+  fill: var(--active-primary);
+}
+.run{
+  fill: var(--primary);
+  padding-right: 10px;
 }
 
-
-.grid-body {
-    display: grid;
-    height: 100%;
-    gap: 15px;
-    grid-template-columns: 2fr 3fr 5fr;
-    grid-template-rows: auto 7fr 3fr;
-  }
-
-  .option-selection {
-    background-color: var(--fg);
-    border-radius: 10px;
-    padding: 10px;
-    grid-column: 1 / 3;
-    grid-row: 3/4;
-  }
-
-  .svg-assets {
-    background-color: var(--fg);
-    border-radius: 10px;
-    grid-column: 2 / 4;
-    grid-row: 2/3;
-    padding: 2rem;
-  }
-
-  .svgArea{
-    width: 80%;
-    float: left;
-    height: 490px;
-    background-color: #3D445E;
-    border-radius: 15px;
-    padding: 20px;
-    border-right: 5px solid rgba(248, 248, 242, 0.13);
-    position: relative;
-  }
+.model-mainBody {
+  display: inline-block;
+  width: 100%;
+}
+.model-verticalMenu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 100%;
+}
+.model-verticalMenu ul li {
+  display: block;
+  margin-bottom: 20px;
+}
+.model-verticalMenu ul li button {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 30px;
+/* identical to box height */
+  color: #95A4D6;
+  text-decoration: none;
+  letter-spacing: .5px;
+  border: none;
+  background-color: inherit;
+}
+.model-verticalMenu li img {
+  margin-right: 12px;
+  position: relative;
+  left: 0;
+}
+.model-verticalMenu li button:hover img {
+  position: relative;
+  left: 5px;
+  transition: .2s;
+}
+.model-verticalMenu {
+  float: left;
+  width: 20%;
+  height: 490px;
+  padding-right: 25px;
+}
+.svgArea{
+  width: 80%;
+  float: left;
+  height: 490px;
+  background-color: #3D445E;
+  border-radius: 15px;
+  padding: 20px;
+  border-right: 5px solid rgba(248, 248, 242, 0.13);
+  position: relative;
+}
 
   .page-options{
     grid-row: 2/3;
