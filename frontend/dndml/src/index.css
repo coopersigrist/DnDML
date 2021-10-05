@@ -1,5 +1,6 @@
 @font-face { font-family: Lato; src: url('Assets/Lato-Bold.ttf'); }
 
+
 select {
   font-family: Lato;
 }
@@ -28,6 +29,7 @@ select {
   --primary: #254671;
   --hover-bg: #B9DAF9;
 
+
   /* on click and active train button states will not have a border */
   --Train-btn-bg: #FFF;
   --Train-btn-border: #254671;
@@ -35,6 +37,7 @@ select {
   /* page-options */
   --Page-options-border: #ADBED6;
 }
+
 .dark {
   --bg: #161926;
   --fg:#454862;
