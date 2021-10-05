@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import LightThemeToggle from './Assets/Light.svg';
+import MenuAngleRight from './Assets/Angle-right.svg';
 
 function get_mouse_pos(svgWindow, event) {
     var CTM = svgWindow.getScreenCTM();
@@ -13,10 +15,10 @@ function get_mouse_pos(svgWindow, event) {
 
 class NavButton extends React.Component {
     render() {
-        return (<a className={this.props.active ? "active" : ""}
+        return (<button className={this.props.active ? "active" : ""}
                 onClick={() => this.props.onClick(this.props.tag)}>
             {this.props.tag}
-        </a>)
+        </button>)
     }
 }
 class NavBar extends React.Component {
@@ -33,7 +35,7 @@ class NavBar extends React.Component {
             {this.renderButton("Training", this.props.activepage)}
             {this.renderButton("Testing", this.props.activepage)}
             {this.renderButton("Tuning", this.props.activepage)}
-            <img id="theme-toggle" src="./Assets/Light.svg" alt="UI theme toggle button"/>
+            <img id="theme-toggle" src={LightThemeToggle} alt="UI theme toggle button"/>
         </nav>);
     }
 }
@@ -100,11 +102,14 @@ class MainArea extends React.Component {
 
         });
     }
+    // Handles click on the vertical bar of the model page
+    handleClickMoBV(event) {
 
-    handleClick(event) {
-        //alert(event.target.classList);
+    }
+
+    // Handles the clicks on the main area
+    handleClickMA(event) {
         if (event.target.classList.contains("svgArea")) {
-            //alert("FF");
             let newComponents = this.state.components.slice();
             //if(event.buttons === 1){
                 let pos = get_mouse_pos(event.target, event);
@@ -133,21 +138,33 @@ class MainArea extends React.Component {
         for (let i = 0; i < this.state.edges.length; ++i) {
             toDraw.push(this.state.edges[i]);
         }
-        return (<svg
-            className = "svgArea" width="400" height="400"
-            viewBox="0 0 400 400" fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            onClick={(event)=>this.handleClick(event)}>
-                {toDraw}
-          </svg>);
+        return <div className={"model-mainBody"}>{[<ModelVerticalMenu onClick={(event) => this.handleClickMoVB(event)}>
+                </ModelVerticalMenu>, 
+                (<svg
+                className = "svgArea" width="400" height="400"
+                viewBox="0 0 400 400" fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                onClick={(event)=>this.handleClickMA(event)}>
+                    {toDraw}
+            </svg>)
+        ]}</div>;
     }
 }
-class ModelVerticalBar extends React.Component {
+class ModelVerticalMenu extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+    }
 
-        };
+    render() {
+        return <div className="model-verticalMenu">
+            <ul>
+                <li><button><img src={MenuAngleRight} alt={""}></img> Dataset</button></li> 
+                <li><button><img src={MenuAngleRight} alt={""}></img> Model</button></li> 
+                <li><button><img src={MenuAngleRight} alt={""}></img> Training</button></li> 
+                <li><button><img src={MenuAngleRight} alt={""}></img> Tuning</button></li> 
+                <li><button><img src={MenuAngleRight} alt={""}></img> Testing</button></li> 
+            </ul>
+        </div>;
     }
 }
 
